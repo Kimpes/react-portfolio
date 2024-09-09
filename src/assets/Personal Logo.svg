@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 655.5 643.8">
+  <defs>
+    <style>
+      .cls-1 {
+        stroke-linejoin: round;
+      }
+
+      .cls-1, .cls-2, .cls-3, .cls-4, .cls-5, .cls-6, .cls-7 {
+        fill: none;
+      }
+
+      .cls-1, .cls-2, .cls-3, .cls-8, .cls-6, .cls-7 {
+        stroke: #1d1d1b;
+      }
+
+      .cls-1, .cls-2, .cls-4, .cls-8, .cls-5, .cls-7 {
+        stroke-width: 40px;
+      }
+
+      .cls-2, .cls-3, .cls-4, .cls-8, .cls-5, .cls-6, .cls-7 {
+        stroke-miterlimit: 10;
+      }
+
+      .cls-3 {
+        stroke-width: 30px;
+      }
+
+      .cls-4 {
+        opacity: .4;
+        stroke: #cbbba0;
+      }
+
+      .cls-4, .cls-5, .cls-7, .cls-9 {
+        display: none;
+      }
+
+      .cls-8 {
+        fill: #fff;
+      }
+
+      .cls-5 {
+        opacity: .4;
+        stroke: #009fe3;
+      }
+
+      .cls-6 {
+        stroke-width: 20px;
+      }
+
+      .cls-10 {
+        fill: #1d1d1b;
+        stroke-width: 0px;
+      }
+    </style>
+  </defs>
+  <g id="Layer_3" data-name="Layer 3" class="cls-9">
+    <path class="cls-8" d="M1617.6,1194.6c0,141.3-114.5,255.8-255.8,255.8s-255.8-114.5-255.8-255.8,45-170.4,45-170.4c0,0,58.6,74.2,129.2,28,60.7-39.7,32.8-118.5,32.8-118.5,0,0,67.3-3,131.5,18.7,101.2,34.3,173.1,129.4,173.1,242.1Z"/>
+    <line class="cls-3" x1="1299.7" y1="1101.6" x2="1299.7" y2="1167.5"/>
+    <line class="cls-3" x1="1491.1" y1="1101.6" x2="1491.1" y2="1167.5"/>
+    <g>
+      <path class="cls-1" d="M1416.8,1195.8"/>
+      <path class="cls-1" d="M1377.4,1156.3"/>
+      <path class="cls-10" d="M1404.9,1207.8l-11.1-11.1c-2.3-2-6.5-6.2-16.8-16.8l-27.9-28.8,112.3.2-56.5,56.5Z"/>
+    </g>
+    <path class="cls-3" d="M1501.5,1208.1s-128.1,65.5-253.4-22.5"/>
+    <path class="cls-3" d="M1562.3,1353.3c-97.6,123.1-291.1,137.8-404-2.1"/>
+  </g>
+  <g id="Layer_1" data-name="Layer 1">
+    <circle class="cls-8" cx="1145.5" cy="345.7" r="255.8"/>
+    <g>
+      <line class="cls-8" x1="1394.8" y1="89.4" x2="777.9" y2="388"/>
+      <polygon class="cls-8" points="1308.9 131 877.4 339.9 757.8 160.6 1239.4 -72.5 1308.9 131"/>
+    </g>
+    <line class="cls-2" x1="1067.6" y1="305" x2="1067.6" y2="371"/>
+    <line class="cls-2" x1="1279" y1="302.8" x2="1279" y2="368.7"/>
+    <line class="cls-7" x1="959" y1="-658.5" x2="1024.9" y2="-658.5"/>
+    <line class="cls-7" x1="1170.2" y1="-890.1" x2="1236.2" y2="-890.1"/>
+    <polyline class="cls-2" points="1198.6 302.8 1198.6 442.2 1137.7 442.2"/>
+    <path class="cls-2" d="M1030.8,479.4s67.8,30.3,138.2,16.8"/>
+  </g>
+  <g id="Head">
+    <g class="cls-9">
+      <line class="cls-8" x1="578.6" y1="72.2" x2="-38.3" y2="370.8"/>
+      <polygon class="cls-8" points="492.7 113.9 61.1 322.7 -58.5 143.4 423.2 -89.7 492.7 113.9"/>
+    </g>
+    <polyline class="cls-7" points="382.4 285.6 382.4 425 321.4 425"/>
+    <path class="cls-7" d="M242.5,366.4s67.8,30.3,138.2,16.8"/>
+    <circle class="cls-5" cx="199.7" cy="113.9" r="86.8"/>
+    <circle class="cls-4" cx="329.8" cy="328.5" r="255.8"/>
+    <path class="cls-8" d="M593.4,324.5c0,141.3-114.5,255.8-255.8,255.8s-255.8-114.5-255.8-255.8,45-170.4,45-170.4c0,0,58.6,74.2,129.2,28,60.7-39.7,32.8-118.5,32.8-118.5,0,0,67.3-3,131.5,18.7,101.2,34.3,173.1,129.4,173.1,242.1Z"/>
+  </g>
+  <g id="Face">
+    <line class="cls-3" x1="285.5" y1="231.5" x2="285.5" y2="297.5"/>
+    <line class="cls-6" x1="489.8" y1="237" x2="424" y2="233"/>
+    <line class="cls-6" x1="252.6" y1="239" x2="318.4" y2="235"/>
+    <line class="cls-3" x1="456.9" y1="231.5" x2="456.9" y2="297.5"/>
+    <g>
+      <path class="cls-1" d="M390,318.2"/>
+      <path class="cls-1" d="M359.5,287.7"/>
+      <path class="cls-10" d="M380.8,327.5l-8.6-8.6c-1.8-1.5-5-4.8-13-13l-21.6-22.3h86.8c0,.1-43.7,43.8-43.7,43.8Z"/>
+    </g>
+    <path class="cls-3" d="M495.5,325.4s-146.3,74.9-289.4-25.7"/>
+  </g>
+</svg>
