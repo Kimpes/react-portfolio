@@ -1,37 +1,37 @@
 import "./App.css";
 import Hero from "./sections/Hero/Hero";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function App() {
-  const [humans, setHumans] = useState([{ name: "unknown", age: 0 }]);
+  const [portfolioEntries, setPortfolioEntries] = useState([]);
 
-  function writeHumans() {
-    let allElements = humans.map((n) => (
-      <li key={n.age}>
-        <span>
-          <b>{n.name}</b>
-        </span>
-        <span>{n.age}</span>
-      </li>
-    ));
-    return allElements;
-  }
+  useEffect(() => {
+    async function fetchAllPortfolioEntries() {
+      await fetch("http://localhost:5000/portfolioEntries")
+        .then((res) => res.json())
+        .then((data) => {
+          setPortfolioEntries(data);
+        });
+    }
 
-  function loadHumans() {
-    fetch("/humans")
-      .then((res) => {
-        return res.json();
-      })
-      .then((val) => {
-        setHumans(val);
-      });
-  }
+    fetchAllPortfolioEntries();
+  }, []);
 
   return (
     <>
       <Hero />
-      <h1>Humans</h1>
-      <ul>{writeHumans()}</ul>
+      <h1>Entries</h1>
+      <ul>
+        {(!!portfolioEntries && portfolioEntries).map((n) => {
+          return (
+            <li key={n.ID}>
+              <p>{n.title}</p>
+              <p>{n.description}</p>
+              <p>{n.image}</p>
+            </li>
+          );
+        })}
+      </ul>
     </>
   );
 }

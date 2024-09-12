@@ -1,22 +1,29 @@
 const express = require("express");
 const app = express();
-const humans = [
+const cors = require("cors");
+
+app.use(cors());
+
+const portfolioEntries = [
   {
-    name: "dave",
-    age: 25,
+    ID: 1,
+    title: "This current website",
+    description:
+      "This current website that you are viewing was built in React.js and Express.js. It's deployed on AWS and connects to a database of portfolio entries via SQLite",
+    image: "/portfolio_images/Coloured Dot Apple.jpg",
   },
   {
-    name: "brave",
-    age: 46,
-  },
-  {
-    name: "misbehave",
-    age: 13,
+    ID: 2,
+    title: "A copy of the previous entry",
+    description:
+      "This current website that you are viewing was built in React.js and Express.js. It's deployed on AWS and connects to a database of portfolio entries via SQLite",
+    image: "/portfolio_images/Coloured Dot Apple.jpg",
   },
 ];
 
-app.get("/humans", (rec, res) => {
-  res.json(humans);
+app.get("/portfolioEntries", (rec, res) => {
+  res.json(portfolioEntries);
 });
 
 app.listen(5000);
+console.log("running");
