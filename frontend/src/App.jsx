@@ -1,5 +1,6 @@
 import "./App.css";
 import Navbar from "./sections/Navbar/Navbar.jsx";
+import Footer from "./sections/Footer/Footer.jsx";
 import { useState, useEffect } from "react";
 
 function App() {
@@ -20,18 +21,21 @@ function App() {
   return (
     <>
       <Navbar />
-      <h1>Entries</h1>
-      <ul>
-        {(!!portfolioEntries && portfolioEntries).map((n) => {
-          return (
-            <li key={n.ID}>
-              <p>{n.title}</p>
-              <p>{n.description}</p>
-              <p>{n.ID}</p>
-            </li>
-          );
-        })}
-      </ul>
+      <main>
+        <h1>Entries</h1>
+        <ul>
+          {(!!portfolioEntries && portfolioEntries).map((n) => {
+            return (
+              <li key={n.ID}>
+                <p>{n.title}</p>
+                <p>{n.description}</p>
+                <p>{n.ID}</p>
+              </li>
+            );
+          })}
+        </ul>
+      </main>
+      <Footer />
     </>
   );
 }

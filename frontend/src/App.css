@@ -43,6 +43,16 @@
   }
   
   /*---------------------------------- Main Containers ----------------------------------*/
+html {
+    background-color: var(--background);
+}
+  #root {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    min-height: 100vh;
+
+  }
+
   body {
     font-family: "Albert sans", main-mid, sans-serif;
     color: var(--off-white);
