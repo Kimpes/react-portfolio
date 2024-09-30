@@ -1,5 +1,5 @@
 import "./App.css";
-import Hero from "./sections/Hero/Hero";
+import Navbar from "./sections/Navbar/Navbar.jsx";
 import { useState, useEffect } from "react";
 
 function App() {
@@ -19,7 +19,7 @@ function App() {
 
   return (
     <>
-      <Hero />
+      <Navbar />
       <h1>Entries</h1>
       <ul>
         {(!!portfolioEntries && portfolioEntries).map((n) => {
