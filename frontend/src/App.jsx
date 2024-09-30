@@ -27,7 +27,7 @@ function App() {
             <li key={n.ID}>
               <p>{n.title}</p>
               <p>{n.description}</p>
-              <p>{n.image}</p>
+              <p>{n.ID}</p>
             </li>
           );
         })}

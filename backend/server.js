@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
+const db = require("./db.js");
 
 app.use(cors());
 
@@ -22,8 +23,20 @@ const portfolioEntries = [
 ];
 
 app.get("/portfolioEntries", (rec, res) => {
-  res.json(portfolioEntries);
+  db.getAllPortfolioEntries((error, portfolioEntries) => {
+    if (error) {
+      res.status(500).json({ error: "Failed to retrieve portfolio entries." });
+    } else {
+      res.status(200).json(portfolioEntries);
+      console.log("Successfully retrieved portfolio entries.");
+      console.log(portfolioEntries);
+    }
+  });
 });
 
 app.listen(5000);
 console.log("running");
+
+
+// TODO
+// - tackle running the server and app in one command

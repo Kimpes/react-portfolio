@@ -1,5 +1,5 @@
 const sqlite3 = require("sqlite3");
-const db = new sqlite3.Database("./database.db");
+const db = new sqlite3.Database("./backend/database.db");
 
 db.run(
     "CREATE TABLE IF NOT EXISTS portfolio_entries ( ID INTEGER NOT NULL PRIMARY KEY, title TEXT, description TEXT, type TEXT, creation_date INTEGER, thumbnail_image_path TEXT, additional_image_path TEXT, additional_description TEXT )"
