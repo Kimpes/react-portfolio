@@ -34,9 +34,20 @@ app.get("/portfolioEntries", (rec, res) => {
   });
 });
 
+app.get("/images", (rec, res) => {
+  db.getAllImages((error, images) => {
+    if (error) {
+      res.status(500).json({ error: "Failed to retrieve images." });
+    } else {
+      res.status(200).json(images);
+      console.log("Successfully retrieved images.");
+      console.log(images);
+    }
+  });
+});
+
 app.listen(5000);
 console.log("running");
-
 
 // TODO
 // - tackle running the server and app in one command

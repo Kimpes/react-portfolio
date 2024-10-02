@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 
 function App() {
   const [portfolioEntries, setPortfolioEntries] = useState([]);
+  const [images, setImages] = useState([]);
 
   useEffect(() => {
     async function fetchAllPortfolioEntries() {
@@ -14,8 +15,16 @@ function App() {
           setPortfolioEntries(data);
         });
     }
+    async function fetchAllImages() {
+      await fetch("http://localhost:5000/images")
+        .then((res) => res.json())
+        .then((data) => {
+          setImages(data);
+        });
+    }
 
     fetchAllPortfolioEntries();
+    fetchAllImages();
   }, []);
 
   return (
@@ -29,6 +38,19 @@ function App() {
               <li key={n.ID}>
                 <p>{n.title}</p>
                 <p>{n.description}</p>
+                <p>{n.ID}</p>
+              </li>
+            );
+          })}
+        </ul>
+
+        <h1>Images</h1>
+        <ul>
+          {(!!images && images).map((n) => {
+            return (
+              <li key={n.ID}>
+                <p>{n.image_path}</p>
+                <p>{n.alt_text}</p>
                 <p>{n.ID}</p>
               </li>
             );
