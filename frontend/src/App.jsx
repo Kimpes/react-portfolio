@@ -2,6 +2,10 @@ import "./App.css";
 import Navbar from "./sections/Navbar/Navbar.jsx";
 import Footer from "./sections/Footer/Footer.jsx";
 import { useState, useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Home from "./pages/Home.jsx";
+import Portfolio from "./pages/Portfolio.jsx";
+import NoPage from "./pages/NoPage.jsx";
 
 function App() {
   const [portfolioEntries, setPortfolioEntries] = useState([]);
@@ -21,20 +25,14 @@ function App() {
   return (
     <>
       <Navbar />
-      <main>
-        <h1>Entries</h1>
-        <ul>
-          {(!!portfolioEntries && portfolioEntries).map((n) => {
-            return (
-              <li key={n.ID}>
-                <p>{n.title}</p>
-                <p>{n.description}</p>
-                <p>{n.ID}</p>
-              </li>
-            );
-          })}
-        </ul>
-      </main>
+      {/* <Router>
+        <Routes>
+          <Route index element={<Home />} />
+          <Route path="/portfolio" element={<Portfolio />} />
+          <Route path="*" element={<NoPage />} />
+        </Routes>
+      </Router> */}
+      <h1>hello</h1>
       <Footer />
     </>
   );
