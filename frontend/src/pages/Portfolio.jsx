@@ -3,17 +3,17 @@ import { useState, useEffect } from "react";
 export default function Portfolio() {
   const [portfolioEntries, setPortfolioEntries] = useState([]);
 
-  //   useEffect(() => {
-  //     async function fetchAllPortfolioEntries() {
-  //       await fetch("http://localhost:5000/portfolioEntries")
-  //         .then((res) => res.json())
-  //         .then((data) => {
-  //           setPortfolioEntries(data);
-  //         });
-  //     }
+  useEffect(() => {
+    async function fetchAllPortfolioEntries() {
+      await fetch("http://localhost:5000/portfolioEntries")
+        .then((res) => res.json())
+        .then((data) => {
+          setPortfolioEntries(data);
+        });
+    }
 
-  //     fetchAllPortfolioEntries();
-  //   }, []);
+    fetchAllPortfolioEntries();
+  }, []);
 
   return (
     <>

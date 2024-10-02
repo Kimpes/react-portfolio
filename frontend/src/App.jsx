@@ -25,13 +25,13 @@ function App() {
   return (
     <>
       <Navbar />
-      {/* <Router>
+      <Router>
         <Routes>
           <Route index element={<Home />} />
           <Route path="/portfolio" element={<Portfolio />} />
           <Route path="*" element={<NoPage />} />
         </Routes>
-      </Router> */}
+      </Router>
       <h1>hello</h1>
       <Footer />
     </>
