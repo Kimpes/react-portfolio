@@ -34,7 +34,7 @@ app.get("/portfolioEntries", (rec, res) => {
   });
 });
 
-app.get("/portfolioEntry/:ID", (rec, res) => {
+app.get("/Entry/:ID", (rec, res) => {
   const ID = rec.params.ID;
   db.getPortfolioEntryByID(ID, (error, portfolioEntry) => {
     if (error) {

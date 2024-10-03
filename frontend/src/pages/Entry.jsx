@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 
-export default function PortfolioEntry() {
+export default function Portfolio() {
   const { ID: queryID } = useParams();
   const [portfolioEntry, setPortfolioEntry] = useState();
   const [error, setError] = useState(null);
@@ -9,7 +9,7 @@ export default function PortfolioEntry() {
   useEffect(() => {
     async function fetchPortfolioEntry(ID) {
       try {
-        const res = await fetch("http://localhost:5000/portfolioEntry/" + ID);
+        const res = await fetch("http://localhost:5000/Entry/" + ID);
         if (!res.ok) {
           throw new Error("Failed to fetch portfolio entry");
         }
