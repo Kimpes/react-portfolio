@@ -23,7 +23,9 @@ export default function Portfolio() {
           {(!!portfolioEntries && portfolioEntries).map((n) => {
             return (
               <li key={n.ID}>
-                <p>{n.title}</p>
+                <a href={"/portfolioEntry/" + n.ID}>
+                  <h1>{n.title}</h1>
+                </a>
                 <p>{n.description}</p>
                 <p>{n.ID}</p>
               </li>
