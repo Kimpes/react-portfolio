@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home.jsx";
 import Portfolio from "./pages/Portfolio.jsx";
+import PortfolioEntry from "./pages/PortfolioEntry.jsx";
 import NoPage from "./pages/NoPage.jsx";
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
         <Routes>
           <Route index element={<Home />} />
           <Route path="/portfolio" element={<Portfolio />} />
+          <Route path="/portfolioEntry/:ID" element={<PortfolioEntry />} />
           <Route path="*" element={<NoPage />} />
         </Routes>
       </Router>

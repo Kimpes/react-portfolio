@@ -34,9 +34,21 @@ app.get("/portfolioEntries", (rec, res) => {
   });
 });
 
+app.get("/portfolioEntry/:ID", (rec, res) => {
+  const ID = rec.params.ID;
+  db.getPortfolioEntryByID(ID, (error, portfolioEntry) => {
+    if (error) {
+      res.status(500).json({ error: "Failed to retrieve portfolio entry." });
+    } else {
+      res.status(200).json(portfolioEntry);
+      console.log("Successfully retrieved portfolio entry.");
+      console.log(portfolioEntry);
+    }
+  });
+});
+
 app.listen(5000);
 console.log("running");
-
 
 // TODO
 // - tackle running the server and app in one command
