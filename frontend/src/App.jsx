@@ -8,29 +8,6 @@ import Entry from "./pages/Entry.jsx";
 import NoPage from "./pages/NoPage.jsx";
 
 function App() {
-  const [portfolioEntries, setPortfolioEntries] = useState([]);
-  const [images, setImages] = useState([]);
-
-  useEffect(() => {
-    async function fetchAllPortfolioEntries() {
-      await fetch("http://localhost:5000/portfolioEntries")
-        .then((res) => res.json())
-        .then((data) => {
-          setPortfolioEntries(data);
-        });
-    }
-    async function fetchAllImages() {
-      await fetch("http://localhost:5000/images")
-        .then((res) => res.json())
-        .then((data) => {
-          setImages(data);
-        });
-    }
-
-    fetchAllPortfolioEntries();
-    fetchAllImages();
-  }, []);
-
   return (
     <>
       <Navbar />

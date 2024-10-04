@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 
 export default function Home() {
   const [portfolioEntries, setPortfolioEntries] = useState([]);
+  const [images, setImages] = useState([]);
 
   useEffect(() => {
     async function fetchAllPortfolioEntries() {
@@ -11,8 +12,16 @@ export default function Home() {
           setPortfolioEntries(data);
         });
     }
+    async function fetchAllImages() {
+      await fetch("http://localhost:5000/images")
+        .then((res) => res.json())
+        .then((data) => {
+          setImages(data);
+        });
+    }
 
     fetchAllPortfolioEntries();
+    fetchAllImages();
   }, []);
 
   return (
@@ -26,7 +35,18 @@ export default function Home() {
                 <a href={"/Entry/" + n.ID}>
                   <h1>{n.title}</h1>
                 </a>
+                <img src={`../../public/images/${n.thumbnail}`} alt="" />
                 <p>{n.description}</p>
+                <p>{n.ID}</p>
+              </li>
+            );
+          })}
+        </ul>
+        <ul>
+          {(!!images && images).map((n) => {
+            return (
+              <li key={n.ID}>
+                <p>{n.image_path}</p>
                 <p>{n.ID}</p>
               </li>
             );

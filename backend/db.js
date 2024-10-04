@@ -101,3 +101,11 @@ exports.getAllImages = function (callback) {
     callback(error, images);
   });
 };
+
+exports.getImagesByEntryID = function (id, callback) {
+  const query = "SELECT * FROM images WHERE associated_entry_ID = ?";
+  const values = [id];
+  db.all(query, values, function (error, images) {
+    callback(error, images);
+  });
+};
