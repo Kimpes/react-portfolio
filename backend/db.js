@@ -47,7 +47,7 @@ exports.createPortfolioEntry = function (
   });
 };
 
-exports.selectPortfolioEntry = function (id, callback) {
+exports.getPortfolioEntryByID = function (id, callback) {
   const query = "SELECT * FROM portfolio_entries WHERE ID = ? ";
   const values = [id];
   db.get(query, values, function (error, entry) {

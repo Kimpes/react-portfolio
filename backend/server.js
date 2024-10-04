@@ -34,6 +34,19 @@ app.get("/portfolioEntries", (rec, res) => {
   });
 });
 
+app.get("/Entry/:ID", (rec, res) => {
+  const ID = rec.params.ID;
+  db.getPortfolioEntryByID(ID, (error, portfolioEntry) => {
+    if (error) {
+      res.status(500).json({ error: "Failed to retrieve portfolio entry." });
+    } else {
+      res.status(200).json(portfolioEntry);
+      console.log("Successfully retrieved portfolio entry.");
+      console.log(portfolioEntry);
+    }
+  });
+});
+      
 app.get("/images", (rec, res) => {
   db.getAllImages((error, images) => {
     if (error) {
