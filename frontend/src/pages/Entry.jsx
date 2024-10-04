@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 export default function Portfolio() {
   const { ID: queryID } = useParams();
   const [portfolioEntry, setPortfolioEntry] = useState();
+  const [images, setImages] = useState([]);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -21,7 +22,22 @@ export default function Portfolio() {
       }
     }
 
+    async function fetchImagesByEntry(ID) {
+      try {
+        const res = await fetch("http://localhost:5000/imagesByEntry/" + ID);
+        if (!res.ok) {
+          throw new Error("Failed to fetch images");
+        }
+        const data = await res.json();
+        setImages(data);
+      } catch (err) {
+        setError(err.message);
+        console.error(err);
+      }
+    }
+
     fetchPortfolioEntry(queryID);
+    fetchImagesByEntry(queryID);
   }, [queryID]);
 
   if (error) {
@@ -29,7 +45,7 @@ export default function Portfolio() {
   }
 
   if (!portfolioEntry) {
-    return <p>Loading...</p>; // You can show a loading message while the data is fetched
+    return <p>Loading...</p>; // Shows a loading message while the data is fetched
   }
 
   return (
@@ -38,11 +54,24 @@ export default function Portfolio() {
         <h1>Single entry here</h1>
         <ul>
           {!!portfolioEntry && (
-            <li key={portfolioEntry.ID}>
-              <p>{portfolioEntry.title}</p>
+            <div key={portfolioEntry.ID}>
+              <h1>{portfolioEntry.title}</h1>
               <p>{portfolioEntry.description}</p>
               <p>{portfolioEntry.ID}</p>
-            </li>
+              {!!images && (
+                <div className="imagesContainer">
+                  {images.map((image) => (
+                    <div key={image.ID}>
+                      <p>{image.image_path}</p>
+                      <img
+                        src={`../../public/images/${image.image_path}`}
+                        alt={image.alt_text}
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
           )}
         </ul>
       </main>

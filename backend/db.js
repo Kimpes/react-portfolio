@@ -5,6 +5,14 @@ db.run(
   "CREATE TABLE IF NOT EXISTS portfolio_entries ( ID INTEGER NOT NULL PRIMARY KEY, title TEXT, description TEXT, type TEXT, creation_date INTEGER, thumbnail_image_path TEXT, additional_image_path TEXT, additional_description TEXT )"
 );
 
+db.run(
+  "CREATE TABLE IF NOT EXISTS images ( ID INTEGER NOT NULL PRIMARY KEY, associated_entry_ID	INTEGER NOT NULL, image_path TEXT NOT NULL, alt_text TEXT, type TEXT, FOREIGN KEY(associated_entry_ID) REFERENCES portfolio_entries(ID) )"
+);
+
+// db.run(
+//   'INSERT INTO images (associated_entry_ID, image_path, alt_text, type) VALUES (1, "images/funkyImage.png", "a funky image", "normal")'
+// );
+
 exports.getAllPortfolioEntries = function (callback) {
   const query = "SELECT * FROM portfolio_entries";
   db.all(query, function (error, portfolio_entries) {
@@ -84,5 +92,20 @@ exports.deletePortfolioEntry = function (id, callback) {
   const values = [id];
   db.get(query, values, function (error) {
     callback(error);
+  });
+};
+
+exports.getAllImages = function (callback) {
+  const query = "SELECT * FROM images";
+  db.all(query, function (error, images) {
+    callback(error, images);
+  });
+};
+
+exports.getImagesByEntryID = function (id, callback) {
+  const query = "SELECT * FROM images WHERE associated_entry_ID = ?";
+  const values = [id];
+  db.all(query, values, function (error, images) {
+    callback(error, images);
   });
 };
