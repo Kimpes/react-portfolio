@@ -27,27 +27,21 @@ export default function Home() {
   return (
     <>
       <main>
-        <h1>Entries</h1>
-        <ul>
+        <h2>A Selection of Works</h2>
+        <ul className="portfolio-entries">
           {(!!portfolioEntries && portfolioEntries).map((n) => {
             return (
-              <li key={n.ID}>
-                <a href={"/Entry/" + n.ID}>
-                  <h1>{n.title}</h1>
-                </a>
-                <img src={`../../public/images/${n.thumbnail}`} alt="" />
-                <p>{n.description}</p>
-                <p>{n.ID}</p>
-              </li>
-            );
-          })}
-        </ul>
-        <ul>
-          {(!!images && images).map((n) => {
-            return (
-              <li key={n.ID}>
-                <p>{n.image_path}</p>
-                <p>{n.ID}</p>
+              <li key={n.ID} className="portfolio-entry-card">
+                <div className="portfolio-image-container hasShadow">
+                  <img src={`../../public/images/${n.thumbnail}`} alt="" />
+                </div>
+                <div className="portfolio-info">
+                  <a href={"/Entry/" + n.ID}>
+                    <h3>{n.title}</h3>
+                  </a>
+                  <div className="portfolio-type">{n.type}</div>
+                  <p>{n.description}</p>
+                </div>
               </li>
             );
           })}
