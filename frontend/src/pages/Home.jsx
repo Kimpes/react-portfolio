@@ -27,25 +27,47 @@ export default function Home() {
   return (
     <>
       <main>
-        <h2>A Selection of Works</h2>
-        <ul className="portfolio-entries">
-          {(!!portfolioEntries && portfolioEntries).map((n) => {
-            return (
-              <li key={n.ID} className="portfolio-entry-card">
-                <div className="portfolio-image-container hasShadow">
-                  <img src={`../../public/images/${n.thumbnail}`} alt="" />
-                </div>
-                <div className="portfolio-info">
-                  <a href={"/Entry/" + n.ID}>
-                    <h3>{n.title}</h3>
-                  </a>
-                  <div className="portfolio-type">{n.type}</div>
-                  <p>{n.description}</p>
-                </div>
-              </li>
-            );
-          })}
-        </ul>
+        <section id="introduction">
+          <div className="introduction-text">
+            <h2>
+              The Ever Great <br></br>Developer & Designer
+            </h2>
+            <h1 className="hasShadow">Filip Gustafsson</h1>
+            <div className="contact-combo">
+              <a href="/#contact">
+                <button className="btn btn-primary clickable large">
+                  Contact Me
+                </button>
+              </a>
+              <p className="small">Or scroll for more info</p>
+            </div>
+          </div>
+          <div className="introduction-image">
+            <img src="/Kim_Cat.png" alt="" />
+          </div>
+        </section>
+        <section id="portfolio">
+          <h2>A Selection of Works</h2>
+          <ul className="portfolio-entries">
+            {(!!portfolioEntries && portfolioEntries).map((n) => {
+              return (
+                <li key={n.ID} className="portfolio-entry-card">
+                  <div className="portfolio-image-container hasShadow">
+                    <img src={`../../public/images/${n.thumbnail}`} alt="" />
+                  </div>
+                  <div className="portfolio-info">
+                    <a href={"/Entry/" + n.ID}>
+                      <h3>{n.title}</h3>
+                    </a>
+                    <div className="btn btn-primary">{n.type}</div>
+                    <p>{n.description}</p>
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+        </section>
+        <section id="contact"></section>
       </main>
     </>
   );
