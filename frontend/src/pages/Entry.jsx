@@ -51,18 +51,14 @@ export default function Portfolio() {
   return (
     <>
       <main>
-        <h1>Single entry here</h1>
-        <ul>
           {!!portfolioEntry && (
-            <div key={portfolioEntry.ID}>
+            <div className="portfolio-entry" key={portfolioEntry.ID}>
               <h1>{portfolioEntry.title}</h1>
-              <p>{portfolioEntry.description}</p>
-              <p>{portfolioEntry.ID}</p>
+              <p>{portfolioEntry.additional_description}</p>
               {!!images && (
-                <div className="imagesContainer">
+                <div className="portfolio-entry-images-grid">
                   {images.map((image) => (
-                    <div key={image.ID}>
-                      <p>{image.image_path}</p>
+                    <div className="portfolio-entry-image-container" key={image.ID}>
                       <img
                         src={`../../public/images/${image.image_path}`}
                         alt={image.alt_text}
@@ -73,7 +69,6 @@ export default function Portfolio() {
               )}
             </div>
           )}
-        </ul>
       </main>
     </>
   );

@@ -16,6 +16,7 @@ function App() {
           <Routes>
             <Route index element={<Home />} />
             <Route path="/Entry/:ID" element={<Entry />} />
+            <Route path="/Entry/:ID/Edit" element={<Entry />} />
             <Route path="*" element={<NoPage />} />
           </Routes>
         </Router>

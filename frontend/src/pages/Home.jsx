@@ -46,16 +46,16 @@ export default function Home() {
             <img src="/Kim_Cat.png" alt="" />
           </div>
         </section>
-        <section id="portfolio">
+        <section id="preview-portfolio">
           <h2>A Selection of Works</h2>
-          <ul className="portfolio-entries">
+          <ul className="preview-portfolio-entries">
             {(!!portfolioEntries && portfolioEntries).map((n) => {
               return (
-                <li key={n.ID} className="portfolio-entry-card">
-                  <div className="portfolio-image-container hasShadow">
+                <li key={n.ID} className="preview-portfolio-entry-card">
+                  <div className="preview-portfolio-image-container hasShadow">
                     <img src={`../../public/images/${n.thumbnail}`} alt="" />
                   </div>
-                  <div className="portfolio-info">
+                  <div className="preview-portfolio-info">
                     <a href={"/Entry/" + n.ID}>
                       <h3>{n.title}</h3>
                     </a>

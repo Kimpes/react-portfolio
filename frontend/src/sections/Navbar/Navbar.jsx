@@ -4,9 +4,9 @@ function Navbar() {
   return (
     <nav>
       <div className={styles.navbar}>
-        <div className={styles.navbarHeadContainer}>
+        <a href="/" className={styles.navbarHeadContainer}>
           <img src="/Kim_Cat_Small.png" alt="" className={styles.navbarHead} />
-        </div>
+        </a>
         <a href="/" className={`${styles.currentPage} ${styles.navbarItem}`}>
           Introduction
         </a>

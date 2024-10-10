@@ -71,8 +71,8 @@ html {
 }
 
 .main-grid > * {
-  max-width: 1100px;
-  width: 80vw;
+  max-width: 1000px;
+  width: calc(80vw + 100px);
 }
 
 body {
@@ -114,6 +114,7 @@ a:hover {
 }
 p {
   margin-bottom: 1rem;
+  max-width: 600px;
 }
 p.small {
   font-size: 0.8em;
@@ -134,7 +135,7 @@ textarea {
   display: flex;
   flex-direction: row;
   gap: 30px;
-  margin: 200px 0px;
+  margin: 8vh 0px;
   justify-content: space-between;
   align-items: center;
 }
@@ -171,37 +172,74 @@ textarea {
   right: 2px;
 }
 
-/*---------------------------------- Portfolio ----------------------------------*/
-.portfolio-entries {
+/*---------------------------------- Preview Portfolio ----------------------------------*/
+.preview-portfolio-entries {
   display: flex;
   flex-direction: column;
   gap: 30px;
   margin-top: 30px;
 }
 
-.portfolio-entry-card {
+.preview-portfolio-entry-card {
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 30px;
 }
 
-.portfolio-image-container > img {
+.preview-portfolio-image-container > img {
   max-width: 300px;
 }
 
-.portfolio-info {
+.preview-portfolio-info {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 10px;
 }
 
-.portfolio-info > a {
+.preview-portfolio-info > a {
   color: var(--off-white);
 }
-.portfolio-info > a:hover {
+.preview-portfolio-info > a:hover {
   color: var(--accent);
+}
+
+/*---------------------------------- Portfolio Entry ----------------------------------*/
+
+.portfolio-entry {
+  width: 100%;
+  margin-top: 10vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.portfolio-entry > * {
+  width: auto;
+  text-align: center;
+}
+
+.portfolio-entry > h1 {
+  color: var(--accent);
+  font-size: 4em;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.portfolio-entry-images-grid {
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+  margin-top: 30px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.portfolio-entry-image-container > img {
+  max-width: 1100px;
+  max-height: 60vh;
 }
 
 /* .portfolio-type {
