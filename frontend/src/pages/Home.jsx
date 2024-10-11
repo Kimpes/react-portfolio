@@ -29,9 +29,7 @@ export default function Home() {
       <main>
         <section id="introduction">
           <div className="introduction-text">
-            <h2>
-              The Ever Great <br></br>Developer & Designer
-            </h2>
+            <h2>The Ever Great Developer & Designer</h2>
             <h1 className="hasShadow">Filip Gustafsson</h1>
             <div className="contact-combo">
               <a href="/#contact">
@@ -70,9 +68,7 @@ export default function Home() {
         <section id="contact">
           <div className="contact-container">
             <div className="contact-left">
-              <h2>
-                Feel free to <br></br> contact me!
-              </h2>
+              <h2>Feel free to contact me!</h2>
             </div>
             <div className="contact-right">
               <p>You can easily reach me through my email</p>

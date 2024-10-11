@@ -71,7 +71,7 @@ html {
 }
 
 .main-grid > * {
-  max-width: 1000px;
+  max-width: min(80vw, 1100px);
   width: calc(80vw + 100px);
 }
 
@@ -89,9 +89,11 @@ h1 {
   letter-spacing: 0px;
   font-weight: 500;
   font-size: 5.5em;
+  line-height: 1em;
 
   margin-top: 20px;
   margin-bottom: 70px;
+  max-width: 80vw;
 }
 h2 {
   font-size: 2.8em;
@@ -104,6 +106,7 @@ h2 {
 h3 {
   font-size: 1.5em;
   font-weight: 500;
+  line-height: 1em;
 }
 a {
   text-decoration: none;
@@ -115,7 +118,7 @@ a:hover {
 }
 p {
   margin-bottom: 1rem;
-  max-width: 600px;
+  max-width: min(80vw, 600px);
 }
 p.small {
   font-size: 0.8em;
@@ -155,6 +158,7 @@ textarea {
   line-height: 1em;
   font-weight: 200;
   color: var(--off-white);
+  max-width: 240px;
 }
 
 .introduction-image > img {
@@ -171,6 +175,29 @@ textarea {
 .contact-combo > p {
   position: relative;
   right: 2px;
+}
+
+@media screen and (max-width: 800px) {
+  #introduction {
+    margin-top: 20vh;
+  }
+  .introduction-image {
+    display: none;
+  }
+  .introduction-text {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+  .introduction-text h1 {
+    font-size: 10vw;
+    margin-bottom: 5vh;
+  }
+  .introduction-text h2 {
+    max-width: 80vw;
+  }
 }
 
 /*---------------------------------- Preview Portfolio ----------------------------------*/
@@ -209,7 +236,7 @@ textarea {
 /*---------------------------------- Contact Section ----------------------------------*/
 
 #contact {
-  margin: 20vh 0;
+  margin: 20vh 0 15vh;
 }
 
 .contact-container {
@@ -218,6 +245,10 @@ textarea {
   align-items: center;
   justify-content: space-between;
   gap: 30px;
+}
+
+.contact-container .contact-left {
+  max-width: 300px;
 }
 
 .contact-container .contact-right {
@@ -234,6 +265,19 @@ textarea {
 
 .contact-container p {
   margin-bottom: 0;
+}
+
+@media screen and (max-width: 900px) {
+  .contact-container {
+    flex-direction: column;
+    gap: 50px;
+  }
+  .contact-container .contact-right {
+    text-align: center;
+  }
+  .contact-container .contact-left {
+    max-width: 80vw;
+  }
 }
 
 /*---------------------------------- Portfolio Entry ----------------------------------*/
@@ -268,9 +312,19 @@ textarea {
   flex-wrap: wrap;
 }
 
-.portfolio-entry-image-container > img {
-  max-width: 1100px;
+.portfolio-entry-image-container > img.large {
+  max-width: min(80vw, 1100px);
   max-height: 60vh;
+}
+.portfolio-entry-image-container > img.small {
+  max-width: min(80vw, 550px);
+  max-height: 35vh;
+}
+
+@media screen and (max-width: 700px) {
+  .portfolio-entry > h1 {
+    font-size: 13vw;
+  }
 }
 
 /* .portfolio-type {

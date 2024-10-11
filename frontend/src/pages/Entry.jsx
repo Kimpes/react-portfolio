@@ -51,24 +51,28 @@ export default function Portfolio() {
   return (
     <>
       <main>
-          {!!portfolioEntry && (
-            <div className="portfolio-entry" key={portfolioEntry.ID}>
-              <h1>{portfolioEntry.title}</h1>
-              <p>{portfolioEntry.additional_description}</p>
-              {!!images && (
-                <div className="portfolio-entry-images-grid">
-                  {images.map((image) => (
-                    <div className="portfolio-entry-image-container" key={image.ID}>
-                      <img
-                        src={`../../public/images/${image.image_path}`}
-                        alt={image.alt_text}
-                      />
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          )}
+        {!!portfolioEntry && (
+          <div className="portfolio-entry" key={portfolioEntry.ID}>
+            <h1>{portfolioEntry.title}</h1>
+            <p>{portfolioEntry.additional_description}</p>
+            {!!images && (
+              <div className="portfolio-entry-images-grid">
+                {images.map((image) => (
+                  <div
+                    className="portfolio-entry-image-container"
+                    key={image.ID}
+                  >
+                    <img
+                      src={`../../public/images/${image.image_path}`}
+                      alt={image.alt_text}
+                      className={`${image.type}`}
+                    />
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
       </main>
     </>
   );

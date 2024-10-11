@@ -8,7 +8,7 @@ function Navbar() {
           <img src="/Kim_Cat_Small.png" alt="" className={styles.navbarHead} />
         </a>
         <a href="/" className={`${styles.currentPage} ${styles.navbarItem}`}>
-          Introduction
+          Intro
         </a>
         <a href="/" className={styles.navbarItem}>
           Portfolio
