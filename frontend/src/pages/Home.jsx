@@ -67,7 +67,21 @@ export default function Home() {
             })}
           </ul>
         </section>
-        <section id="contact"></section>
+        <section id="contact">
+          <div className="contact-container">
+            <div className="contact-left">
+              <h2>
+                Feel free to <br></br> contact me!
+              </h2>
+            </div>
+            <div className="contact-right">
+              <p>You can easily reach me through my email</p>
+              <a href="mailto:gustafssonfilip@hotmail.com">
+                gustafssonfilip@hotmail.com
+              </a>
+            </div>
+          </div>
+        </section>
       </main>
     </>
   );
