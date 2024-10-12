@@ -5,7 +5,7 @@
   --off-white: #e8eddf;
   --background: #333533;
   --background-dark: #2f312f;
-  --background-light: #4d4f4d;
+  --background-light: #585b58;
   --danger: #d43b36;
 
   --shadow: rgba(0, 0, 0, 0.2);
@@ -218,6 +218,10 @@ textarea {
   margin-top: 60px;
 }
 
+.preview-portfolio-entries p {
+  margin: 0;
+}
+
 .preview-portfolio-entries > a:hover {
   background-color: var(--background-dark);
 }
@@ -227,6 +231,13 @@ textarea {
   flex-direction: row;
   align-items: center;
   gap: 30px;
+}
+
+.preview-portfolio-entry-card .title-and-tag {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
 }
 
 .preview-portfolio-image-container > img {
@@ -244,6 +255,34 @@ textarea {
 .preview-portfolio-entries > a > li p,
 .preview-portfolio-entries > a > li h3 {
   color: var(--off-white);
+}
+
+@media screen and (max-width: 800px) {
+  .preview-portfolio-entries {
+    gap: 35px;
+    margin-top: 35px;
+  }
+  .preview-portfolio-entry-card {
+    flex-direction: column-reverse;
+    gap: 15px;
+    border-top: 1px solid var(--background-light);
+    padding-top: 35px;
+  }
+  .preview-portfolio-info {
+    width: 100%;
+    gap: 5px;
+  }
+  .preview-portfolio-entries > a > li h3 {
+    color: var(--accent);
+  }
+  .preview-portfolio-entry-card .title-and-tag {
+    flex-direction: row;
+    gap: 30px;
+    width: 100%;
+  }
+  .preview-portfolio-image-container > img {
+    max-width: 80vw;
+  }
 }
 
 /*---------------------------------- Contact Section ----------------------------------*/
@@ -294,6 +333,10 @@ textarea {
   }
   .contact-container .contact-left {
     max-width: 80vw;
+    text-align: center;
+  }
+  .contact-container a {
+    font-size: 6vw;
   }
 }
 

@@ -61,8 +61,10 @@ export default function Home() {
                       />
                     </div>
                     <div className="preview-portfolio-info">
-                      <h3>{n.title}</h3>
-                      <div className="btn btn-primary">{n.type}</div>
+                      <div className="title-and-tag">
+                        <h3>{n.title}</h3>
+                        <div className="btn btn-primary">{n.type}</div>
+                      </div>
                       <p>{n.description}</p>
                     </div>
                   </li>
