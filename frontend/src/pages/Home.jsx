@@ -33,7 +33,7 @@ export default function Home() {
             <h1 className="hasShadow">Filip Gustafsson</h1>
             <div className="contact-combo">
               <a href="/#contact">
-                <button className="btn btn-primary clickable large">
+                <button className="btn btn-primary clickable large hoverShadow">
                   Contact Me
                 </button>
               </a>
@@ -49,18 +49,24 @@ export default function Home() {
           <ul className="preview-portfolio-entries">
             {(!!portfolioEntries && portfolioEntries).map((n) => {
               return (
-                <li key={n.ID} className="preview-portfolio-entry-card">
-                  <div className="preview-portfolio-image-container hasShadow">
-                    <img src={`../../public/images/${n.thumbnail}`} alt="" />
-                  </div>
-                  <div className="preview-portfolio-info">
-                    <a href={"/Entry/" + n.ID}>
+                <a
+                  href={"/Entry/" + n.ID}
+                  className="hoverShadow small clickable"
+                >
+                  <li key={n.ID} className="preview-portfolio-entry-card">
+                    <div className="preview-portfolio-image-container">
+                      <img
+                        src={`../../public/thumbnails/${n.thumbnail}`}
+                        alt={n.alt_text}
+                      />
+                    </div>
+                    <div className="preview-portfolio-info">
                       <h3>{n.title}</h3>
-                    </a>
-                    <div className="btn btn-primary">{n.type}</div>
-                    <p>{n.description}</p>
-                  </div>
-                </li>
+                      <div className="btn btn-primary">{n.type}</div>
+                      <p>{n.description}</p>
+                    </div>
+                  </li>
+                </a>
               );
             })}
           </ul>
@@ -72,7 +78,10 @@ export default function Home() {
             </div>
             <div className="contact-right">
               <p>You can easily reach me through my email</p>
-              <a href="mailto:gustafssonfilip@hotmail.com">
+              <a
+                href="mailto:gustafssonfilip@hotmail.com"
+                className="hoverShadow"
+              >
                 gustafssonfilip@hotmail.com
               </a>
             </div>

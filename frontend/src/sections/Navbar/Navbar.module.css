@@ -34,6 +34,7 @@
   width: auto;
   right: 1px;
 }
+
 @media screen and (max-width: 500px) {
   .navbarHeadContainer {
     height: 0px;

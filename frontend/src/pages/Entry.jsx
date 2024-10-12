@@ -69,6 +69,13 @@ export default function Portfolio() {
                     />
                   </div>
                 ))}
+                <div className="link-container">
+                  <a href={portfolioEntry.link}>
+                    <button className="btn btn-primary clickable large hoverShadow">
+                      Link To Project
+                    </button>
+                  </a>
+                </div>
               </div>
             )}
           </div>

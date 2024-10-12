@@ -4,7 +4,8 @@
   --dark-text: #b8b6b6;
   --off-white: #e8eddf;
   --background: #333533;
-  --background-2: #4d4f4d;
+  --background-dark: #2f312f;
+  --background-light: #4d4f4d;
   --danger: #d43b36;
 
   --shadow: rgba(0, 0, 0, 0.2);
@@ -13,6 +14,13 @@
 /*---------------------------------- Generic Roles ------------------------------------*/
 .hasShadow {
   filter: drop-shadow(-3px 3px 3px var(--shadow));
+}
+.hoverShadow:hover {
+  transform: scale(1.05);
+  filter: drop-shadow(-6px 6px 6px var(--shadow));
+}
+.hoverShadow:hover.small {
+  transform: scale(1.03);
 }
 .clickable {
   cursor: pointer;
@@ -59,9 +67,11 @@
   padding: 0px;
   box-sizing: border-box;
   font-family: "Albert sans", main-mid, sans-serif;
+  transition: transform 0.05s;
 }
 html {
   background-color: var(--background);
+  scroll-behavior: smooth;
 }
 .main-grid {
   display: grid;
@@ -208,6 +218,10 @@ textarea {
   margin-top: 60px;
 }
 
+.preview-portfolio-entries > a:hover {
+  background-color: var(--background-dark);
+}
+
 .preview-portfolio-entry-card {
   display: flex;
   flex-direction: row;
@@ -216,7 +230,8 @@ textarea {
 }
 
 .preview-portfolio-image-container > img {
-  max-width: 300px;
+  max-width: 400px;
+  display: block;
 }
 
 .preview-portfolio-info {
@@ -226,11 +241,9 @@ textarea {
   gap: 10px;
 }
 
-.preview-portfolio-info > a {
+.preview-portfolio-entries > a > li p,
+.preview-portfolio-entries > a > li h3 {
   color: var(--off-white);
-}
-.preview-portfolio-info > a:hover {
-  color: var(--accent);
 }
 
 /*---------------------------------- Contact Section ----------------------------------*/
@@ -261,6 +274,10 @@ textarea {
   font-size: 2em;
   color: var(--off-white);
   font-stretch: expanded;
+}
+
+.contact-container a:hover {
+  color: var(--accent);
 }
 
 .contact-container p {
