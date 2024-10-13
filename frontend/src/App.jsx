@@ -10,16 +10,18 @@ import NoPage from "./pages/NoPage.jsx";
 function App() {
   return (
     <>
-      <Navbar />
-      <Router>
-        <Routes>
-          <Route index element={<Home />} />
-          <Route path="/Entry/:ID" element={<Entry />} />
-          <Route path="*" element={<NoPage />} />
-        </Routes>
-      </Router>
-      <h1>hello</h1>
-      <Footer />
+      <div className="main-grid">
+        <Navbar />
+        <Router>
+          <Routes>
+            <Route index element={<Home />} />
+            <Route path="/Entry/:ID" element={<Entry />} />
+            <Route path="/Entry/:ID/Edit" element={<Entry />} />
+            <Route path="*" element={<NoPage />} />
+          </Routes>
+        </Router>
+        <Footer />
+      </div>
     </>
   );
 }

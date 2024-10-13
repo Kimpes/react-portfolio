@@ -51,29 +51,35 @@ export default function Portfolio() {
   return (
     <>
       <main>
-        <h1>Single entry here</h1>
-        <ul>
-          {!!portfolioEntry && (
-            <div key={portfolioEntry.ID}>
-              <h1>{portfolioEntry.title}</h1>
-              <p>{portfolioEntry.description}</p>
-              <p>{portfolioEntry.ID}</p>
-              {!!images && (
-                <div className="imagesContainer">
-                  {images.map((image) => (
-                    <div key={image.ID}>
-                      <p>{image.image_path}</p>
-                      <img
-                        src={`../../public/images/${image.image_path}`}
-                        alt={image.alt_text}
-                      />
-                    </div>
-                  ))}
+        {!!portfolioEntry && (
+          <div className="portfolio-entry" key={portfolioEntry.ID}>
+            <h1>{portfolioEntry.title}</h1>
+            <p>{portfolioEntry.additional_description}</p>
+            {!!images && (
+              <div className="portfolio-entry-images-grid">
+                {images.map((image) => (
+                  <div
+                    className="portfolio-entry-image-container"
+                    key={image.ID}
+                  >
+                    <img
+                      src={`../../public/images/${image.image_path}`}
+                      alt={image.alt_text}
+                      className={`${image.type}`}
+                    />
+                  </div>
+                ))}
+                <div className="link-container">
+                  <a href={portfolioEntry.link}>
+                    <button className="btn btn-primary clickable large hoverShadow">
+                      Link To Project
+                    </button>
+                  </a>
                 </div>
-              )}
-            </div>
-          )}
-        </ul>
+              </div>
+            )}
+          </div>
+        )}
       </main>
     </>
   );
