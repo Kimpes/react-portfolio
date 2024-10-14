@@ -4,6 +4,7 @@ const cors = require("cors");
 const db = require("./db.js");
 
 app.use(cors());
+app.use(express.urlencoded({ extended: true }));
 
 app.get("/portfolioEntries", (rec, res) => {
   db.getAllPortfolioEntries((error, portfolioEntries) => {
@@ -51,6 +52,26 @@ app.get("/imagesByEntry/:ID", (rec, res) => {
       res.status(200).json(images);
       console.log("Successfully retrieved images.");
       console.log(images);
+    }
+  });
+});
+
+app.post("/Entry/:ID/Edit", (rec, res) => {
+  const ID = rec.params.ID;
+  const changes = {
+    ID,
+    title: rec.body.title,
+    description: rec.body.description,
+    type: rec.body.type,
+    thumbnail: rec.body.thumbnail,
+    additionalDescription: rec.body.additionalDescription,
+    link: rec.body.link,
+  };
+  db.updatePortfolioEntry(changes, (error) => {
+    if (error) {
+      res.status(500).json({ error: "Failed to update portfolio entry." });
+    } else {
+      res.status(200).json({ success: true, ID });
     }
   });
 });

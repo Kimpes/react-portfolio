@@ -40,6 +40,14 @@ export default function Portfolio() {
     fetchImagesByEntry(queryID);
   }, [queryID]);
 
+  function handleImageTypeChange(imageID, newType) {
+    setImages((prevImages) =>
+      prevImages.map((image) =>
+        image.ID === imageID ? { ...image, type: newType } : image
+      )
+    );
+  }
+
   if (error) {
     return <p>Error: {error}</p>;
   }
@@ -53,7 +61,7 @@ export default function Portfolio() {
       <main>
         {!!portfolioEntry && (
           <form
-            action={`/portfolioEntry/edit/${portfolioEntry.ID}`}
+            action={`http://localhost:5000/Entry/${portfolioEntry.ID}/Edit`}
             method="POST"
           >
             <div className="portfolio-entry-edit" key={portfolioEntry.ID}>
@@ -63,8 +71,9 @@ export default function Portfolio() {
                   className="title"
                   type="text"
                   name="title"
-                  defaultValue={portfolioEntry.title}
+                  value={portfolioEntry.title}
                   placeholder="Title"
+                  required={true}
                 />
               </div>
               <div className="input-pair">
@@ -72,17 +81,19 @@ export default function Portfolio() {
                 <input
                   type="text"
                   name="type"
-                  defaultValue={portfolioEntry.type}
+                  value={portfolioEntry.type}
+                  required={true}
                 />
               </div>
               <div className="input-pair">
                 <label htmlFor="description">Short Summary</label>
                 <textarea
                   name="description"
-                  defaultValue={portfolioEntry.description}
+                  value={portfolioEntry.description}
                   placeholder="Description"
                   id="description"
                   rows={3}
+                  required={true}
                 ></textarea>
               </div>
               <div className="input-pair">
@@ -91,10 +102,11 @@ export default function Portfolio() {
                 </label>
                 <textarea
                   name="additional_description"
-                  defaultValue={portfolioEntry.additional_description}
+                  value={portfolioEntry.additional_description}
                   placeholder="Additional Description"
                   id="additional-description"
                   rows={10}
+                  required={true}
                 ></textarea>
               </div>
               <div className="input-pair">
@@ -102,7 +114,8 @@ export default function Portfolio() {
                 <input
                   type="text"
                   name="link"
-                  defaultValue={portfolioEntry.link}
+                  value={portfolioEntry.link}
+                  required={true}
                 />
               </div>
               <div className="input-pair">
@@ -110,7 +123,8 @@ export default function Portfolio() {
                 <input
                   type="text"
                   name="thumbnail"
-                  defaultValue={portfolioEntry.thumbnail}
+                  value={portfolioEntry.thumbnail}
+                  required={true}
                 />
               </div>
               {!!images && (
@@ -126,7 +140,7 @@ export default function Portfolio() {
                         <input
                           type="text"
                           name="image_path"
-                          defaultValue={image.image_path}
+                          value={image.image_path}
                           placeholder="Image Path"
                         />
                       </div>
@@ -135,13 +149,19 @@ export default function Portfolio() {
                         <input
                           type="text"
                           name="alt_text"
-                          defaultValue={image.alt_text}
+                          value={image.alt_text}
                           placeholder="Alt Text"
                         />
                       </div>
                       <div className="input-pair">
                         <label htmlFor="type">Type</label>
-                        <select name="type" value={image.type}>
+                        <select
+                          name="type"
+                          value={image.type}
+                          onChange={(e) =>
+                            handleImageTypeChange(image.ID, e.target.value)
+                          }
+                        >
                           <option value="small">Small</option>
                           <option value="large">Large</option>
                         </select>
@@ -150,6 +170,14 @@ export default function Portfolio() {
                   ))}
                 </div>
               )}
+            </div>
+            <div className="link-container">
+              <button
+                type="submit"
+                className="btn btn-primary clickable large hoverShadow"
+              >
+                Submit Changes
+              </button>
             </div>
           </form>
         )}

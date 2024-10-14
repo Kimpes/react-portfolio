@@ -55,32 +55,31 @@ exports.getPortfolioEntryByID = function (id, callback) {
   });
 };
 
-exports.updatePortfolioEntry = function (
-  title,
-  description,
-  type,
-  thumbnail,
-  additionalDescription,
-  link,
-  callback
-) {
+exports.updatePortfolioEntry = function (entry, callback) {
   let query;
   let values;
-  if (thumbnail == undefined) {
+  if (entry.thumbnail == undefined) {
     query =
       "UPDATE portfolio_entries SET title = ?, description = ?, type = ?, additional_description = ?, link = ? WHERE ID = ?";
-    values = [title, description, type, additionalDescription, link, id];
+    values = [
+      entry.title,
+      entry.description,
+      entry.type,
+      entry.additionalDescription,
+      entry.link,
+      entry.ID,
+    ];
   } else {
     query =
       "UPDATE portfolio_entries SET title = ?, description = ?, type = ?, additional_description = ?, link = ?, thumbnail = ? WHERE ID = ?";
     values = [
-      title,
-      description,
-      type,
-      additionalDescription,
-      link,
-      thumbnail,
-      id,
+      entry.title,
+      entry.description,
+      entry.type,
+      entry.additionalDescription,
+      entry.link,
+      entry.thumbnail,
+      entry.ID,
     ];
   }
   db.run(query, values, function (error) {
