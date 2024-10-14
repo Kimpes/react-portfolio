@@ -50,10 +50,11 @@ export default function Home() {
             {(!!portfolioEntries && portfolioEntries).map((n) => {
               return (
                 <a
+                  key={n.ID}
                   href={"/Entry/" + n.ID}
                   className="hoverShadow small clickable"
                 >
-                  <li key={n.ID} className="preview-portfolio-entry-card">
+                  <li className="preview-portfolio-entry-card">
                     <div className="preview-portfolio-image-container">
                       <img
                         src={`../../public/thumbnails/${n.thumbnail}`}

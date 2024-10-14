@@ -75,6 +75,11 @@ export default function Portfolio() {
                       Link To Project
                     </button>
                   </a>
+                  <a href={`/Entry/${portfolioEntry.ID}/Edit`}>
+                    <button className="btn btn-primary clickable large hoverShadow">
+                      Edit
+                    </button>
+                  </a>
                 </div>
               </div>
             )}

@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home.jsx";
 import Entry from "./pages/Entry.jsx";
+import EntryEdit from "./pages/EntryEdit.jsx";
 import NoPage from "./pages/NoPage.jsx";
 
 function App() {
@@ -15,8 +16,8 @@ function App() {
         <Router>
           <Routes>
             <Route index element={<Home />} />
+            <Route path="/Entry/:ID/Edit" element={<EntryEdit />} />
             <Route path="/Entry/:ID" element={<Entry />} />
-            <Route path="/Entry/:ID/Edit" element={<Entry />} />
             <Route path="*" element={<NoPage />} />
           </Routes>
         </Router>
