@@ -141,12 +141,10 @@ export default function Portfolio() {
                       </div>
                       <div className="input-pair">
                         <label htmlFor="type">Type</label>
-                        <input
-                          type="text"
-                          name="type"
-                          defaultValue={image.type}
-                          placeholder="Type"
-                        />
+                        <select name="type" value={image.type}>
+                          <option value="small">Small</option>
+                          <option value="large">Large</option>
+                        </select>
                       </div>
                     </div>
                   ))}
