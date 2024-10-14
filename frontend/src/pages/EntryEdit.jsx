@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 export default function Portfolio() {
@@ -6,6 +6,7 @@ export default function Portfolio() {
   const [portfolioEntry, setPortfolioEntry] = useState();
   const [images, setImages] = useState([]);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchPortfolioEntry(ID) {
@@ -48,6 +49,29 @@ export default function Portfolio() {
     );
   }
 
+  // Function to handle form submission (with help from chatGPT)
+  const handleSubmit = async (event) => {
+    event.preventDefault(); // Prevent the default form submission behavior
+    try {
+      const formData = new FormData(event.target); // Collect form data
+      const response = await fetch(
+        `http://localhost:5000/Entry/${portfolioEntry.ID}/Edit`,
+        {
+          method: "POST",
+          body: formData, // Sending form data
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Failed to update portfolio entry.");
+      }
+      // If the submission is successful, navigate back to the entry page
+      navigate(`/Entry/${portfolioEntry.ID}`);
+    } catch (error) {
+      console.error(error);
+      setError("Failed to update the entry.");
+    }
+  };
+
   if (error) {
     return <p>Error: {error}</p>;
   }
@@ -60,10 +84,7 @@ export default function Portfolio() {
     <>
       <main>
         {!!portfolioEntry && (
-          <form
-            action={`http://localhost:5000/Entry/${portfolioEntry.ID}/Edit`}
-            method="POST"
-          >
+          <form onSubmit={handleSubmit}>
             <div className="portfolio-entry-edit" key={portfolioEntry.ID}>
               <div className="input-pair">
                 <label htmlFor="title">Title</label>
@@ -74,6 +95,12 @@ export default function Portfolio() {
                   value={portfolioEntry.title}
                   placeholder="Title"
                   required={true}
+                  onChange={(e) =>
+                    setPortfolioEntry({
+                      ...portfolioEntry,
+                      title: e.target.value,
+                    })
+                  }
                 />
               </div>
               <div className="input-pair">
@@ -83,6 +110,12 @@ export default function Portfolio() {
                   name="type"
                   value={portfolioEntry.type}
                   required={true}
+                  onChange={(e) =>
+                    setPortfolioEntry({
+                      ...portfolioEntry,
+                      type: e.target.value,
+                    })
+                  }
                 />
               </div>
               <div className="input-pair">
@@ -94,6 +127,12 @@ export default function Portfolio() {
                   id="description"
                   rows={3}
                   required={true}
+                  onChange={(e) =>
+                    setPortfolioEntry({
+                      ...portfolioEntry,
+                      description: e.target.value,
+                    })
+                  }
                 ></textarea>
               </div>
               <div className="input-pair">
@@ -107,6 +146,12 @@ export default function Portfolio() {
                   id="additional-description"
                   rows={10}
                   required={true}
+                  onChange={(e) =>
+                    setPortfolioEntry({
+                      ...portfolioEntry,
+                      additional_description: e.target.value,
+                    })
+                  }
                 ></textarea>
               </div>
               <div className="input-pair">
@@ -116,6 +161,12 @@ export default function Portfolio() {
                   name="link"
                   value={portfolioEntry.link}
                   required={true}
+                  onChange={(e) =>
+                    setPortfolioEntry({
+                      ...portfolioEntry,
+                      link: e.target.value,
+                    })
+                  }
                 />
               </div>
               <div className="input-pair">
@@ -125,6 +176,12 @@ export default function Portfolio() {
                   name="thumbnail"
                   value={portfolioEntry.thumbnail}
                   required={true}
+                  onChange={(e) =>
+                    setPortfolioEntry({
+                      ...portfolioEntry,
+                      thumbnail: e.target.value,
+                    })
+                  }
                 />
               </div>
               {!!images && (

@@ -2,6 +2,8 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const db = require("./db.js");
+const multer = require("multer");
+const upload = multer();
 
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
@@ -56,7 +58,7 @@ app.get("/imagesByEntry/:ID", (rec, res) => {
   });
 });
 
-app.post("/Entry/:ID/Edit", (rec, res) => {
+app.post("/Entry/:ID/Edit", upload.none(), (rec, res) => {
   const ID = rec.params.ID;
   const changes = {
     ID,
@@ -64,7 +66,7 @@ app.post("/Entry/:ID/Edit", (rec, res) => {
     description: rec.body.description,
     type: rec.body.type,
     thumbnail: rec.body.thumbnail,
-    additionalDescription: rec.body.additionalDescription,
+    additionalDescription: rec.body.additional_description,
     link: rec.body.link,
   };
   db.updatePortfolioEntry(changes, (error) => {
