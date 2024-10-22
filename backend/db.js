@@ -2,11 +2,11 @@ const sqlite3 = require("sqlite3");
 const db = new sqlite3.Database("./backend/database.db");
 
 db.run(
-  "CREATE TABLE IF NOT EXISTS portfolio_entries ( ID INTEGER NOT NULL PRIMARY KEY, title TEXT, description TEXT, type TEXT, creation_date INTEGER, thumbnail TEXT, additional_description TEXT, link TEXT)"
+  "CREATE TABLE IF NOT EXISTS portfolio_entries ( ID INTEGER NOT NULL PRIMARY KEY, title TEXT, description TEXT, portfolio_type TEXT, creation_date INTEGER, thumbnail_id INTEGER, additional_description TEXT, link TEXT, FOREIGN KEY(thumbnail_ID) REFERENCES images(ID) )"
 );
 
 db.run(
-  "CREATE TABLE IF NOT EXISTS images ( ID INTEGER NOT NULL PRIMARY KEY, associated_entry_ID	INTEGER NOT NULL, image_path TEXT NOT NULL, alt_text TEXT, type TEXT, FOREIGN KEY(associated_entry_ID) REFERENCES portfolio_entries(ID) )"
+  "CREATE TABLE IF NOT EXISTS images ( ID INTEGER NOT NULL PRIMARY KEY, associated_entry_ID	INTEGER NOT NULL, image_path TEXT NOT NULL, alt_text TEXT, image_type TEXT, FOREIGN KEY(associated_entry_ID) REFERENCES portfolio_entries(ID) )"
 );
 
 // db.run(
@@ -23,8 +23,8 @@ exports.getAllPortfolioEntries = function (callback) {
 exports.createPortfolioEntry = function (
   title,
   description,
-  type,
-  thumbnail,
+  portfolio_type,
+  thumbnail_id,
   additionalDescription,
   link,
   callback
@@ -32,13 +32,13 @@ exports.createPortfolioEntry = function (
   const currentTime = new Date();
   const postDate = currentTime.getTime();
   const query =
-    "INSERT INTO portfolio_entries (title, description, creation_date, type, thumbnail, additionalDescription, link) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    "INSERT INTO portfolio_entries (title, description, creation_date, portfolio_type, thumbnail_id, additionalDescription, link) VALUES (?, ?, ?, ?, ?, ?, ?)";
   const values = [
     title,
     description,
     postDate,
-    type,
-    thumbnail,
+    portfolio_type,
+    thumbnail_id,
     additionalDescription,
     link,
   ];
@@ -48,9 +48,11 @@ exports.createPortfolioEntry = function (
 };
 
 exports.getPortfolioEntryByID = function (id, callback) {
-  const query = "SELECT * FROM portfolio_entries WHERE ID = ? ";
+  console.log("im in the database");
+  const query =
+    "SELECT p.ID as portfolio_id, p.title, p.description, p.portfolio_type, p.creation_date, p.thumbnail_id, p.additional_description, p.link, i.ID as image_id, i.image_path, i.alt_text, i.image_type FROM portfolio_entries AS p LEFT JOIN images AS i ON p.ID = i.associated_entry_id WHERE p.ID = ?;";
   const values = [id];
-  db.get(query, values, function (error, entry) {
+  db.all(query, values, function (error, entry) {
     callback(error, entry);
   });
 };
@@ -58,27 +60,27 @@ exports.getPortfolioEntryByID = function (id, callback) {
 exports.updatePortfolioEntry = function (entry, callback) {
   let query;
   let values;
-  if (entry.thumbnail == undefined) {
+  if (entry.thumbnail_id == undefined) {
     query =
-      "UPDATE portfolio_entries SET title = ?, description = ?, type = ?, additional_description = ?, link = ? WHERE ID = ?";
+      "UPDATE portfolio_entries SET title = ?, description = ?, portfolio_type = ?, additional_description = ?, link = ? WHERE ID = ?";
     values = [
       entry.title,
       entry.description,
-      entry.type,
+      entry.portfolio_type,
       entry.additionalDescription,
       entry.link,
       entry.ID,
     ];
   } else {
     query =
-      "UPDATE portfolio_entries SET title = ?, description = ?, type = ?, additional_description = ?, link = ?, thumbnail = ? WHERE ID = ?";
+      "UPDATE portfolio_entries SET title = ?, description = ?, portfolio_type = ?, additional_description = ?, link = ?, thumbnail_id = ? WHERE ID = ?";
     values = [
       entry.title,
       entry.description,
-      entry.type,
+      entry.portfolio_type,
       entry.additionalDescription,
       entry.link,
-      entry.thumbnail,
+      entry.thumbnail_id,
       entry.ID,
     ];
   }

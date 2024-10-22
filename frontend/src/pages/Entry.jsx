@@ -16,20 +16,7 @@ export default function Portfolio() {
         }
         const data = await res.json();
         setPortfolioEntry(data);
-      } catch (err) {
-        setError(err.message);
-        console.error(err);
-      }
-    }
-
-    async function fetchImagesByEntry(ID) {
-      try {
-        const res = await fetch("http://localhost:5000/imagesByEntry/" + ID);
-        if (!res.ok) {
-          throw new Error("Failed to fetch images");
-        }
-        const data = await res.json();
-        setImages(data);
+        console.log(data);
       } catch (err) {
         setError(err.message);
         console.error(err);
@@ -37,7 +24,6 @@ export default function Portfolio() {
     }
 
     fetchPortfolioEntry(queryID);
-    fetchImagesByEntry(queryID);
   }, [queryID]);
 
   if (error) {
@@ -55,9 +41,9 @@ export default function Portfolio() {
           <div className="portfolio-entry" key={portfolioEntry.ID}>
             <h1>{portfolioEntry.title}</h1>
             <p>{portfolioEntry.additional_description}</p>
-            {!!images && (
+            {!!portfolioEntry.images && (
               <div className="portfolio-entry-images-grid">
-                {images.map((image) => (
+                {portfolioEntry.images.map((image) => (
                   <div
                     className="portfolio-entry-image-container"
                     key={image.ID}
@@ -69,20 +55,20 @@ export default function Portfolio() {
                     />
                   </div>
                 ))}
-                <div className="link-container">
-                  <a href={portfolioEntry.link}>
-                    <button className="btn btn-primary clickable large hoverShadow">
-                      Link To Project
-                    </button>
-                  </a>
-                  <a href={`/Entry/${portfolioEntry.ID}/Edit`}>
-                    <button className="btn btn-primary clickable large hoverShadow">
-                      Edit
-                    </button>
-                  </a>
-                </div>
               </div>
             )}
+            <div className="link-container">
+              <a href={portfolioEntry.link}>
+                <button className="btn btn-primary clickable large hoverShadow">
+                  Link To Project
+                </button>
+              </a>
+              <a href={`/Entry/${portfolioEntry.ID}/Edit`}>
+                <button className="btn btn-primary clickable large hoverShadow">
+                  Edit
+                </button>
+              </a>
+            </div>
           </div>
         )}
       </main>
