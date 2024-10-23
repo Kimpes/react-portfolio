@@ -54,6 +54,7 @@ export default function Portfolio() {
     event.preventDefault(); // Prevent the default form submission behavior
     try {
       const formData = new FormData(event.target); // Collect form data
+      console.log(formData);
       const response = await fetch(
         `http://localhost:5000/Entry/${portfolioEntry.ID}/Edit`,
         {
@@ -170,24 +171,24 @@ export default function Portfolio() {
                 />
               </div>
               <div className="input-pair">
-                <label htmlFor="thumbnail">Thumbnail</label>
+                <label htmlFor="thumbnail_id">Thumbnail</label>
                 <input
                   type="text"
-                  name="thumbnail"
-                  value={portfolioEntry.thumbnail}
+                  name="thumbnail_id"
+                  value={portfolioEntry.thumbnail_id}
                   required={true}
                   onChange={(e) =>
                     setPortfolioEntry({
                       ...portfolioEntry,
-                      thumbnail: e.target.value,
+                      thumbnail_id: e.target.value,
                     })
                   }
                 />
               </div>
-              {!!images && (
+              {!!portfolioEntry.images && (
                 <div className="portfolio-entry-images-edit">
                   <h2>Images</h2>
-                  {images.map((image) => (
+                  {portfolioEntry.images.map((image) => (
                     <div
                       className="portfolio-entry-image-container"
                       key={image.ID}

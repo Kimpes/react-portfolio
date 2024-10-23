@@ -10,6 +10,7 @@ export default function Home() {
         .then((res) => res.json())
         .then((data) => {
           setPortfolioEntries(data);
+          console.log(portfolioEntries);
         });
     }
 

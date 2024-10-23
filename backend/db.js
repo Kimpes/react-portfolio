@@ -15,7 +15,7 @@ db.run(
 
 exports.getAllPortfolioEntries = function (callback) {
   const query =
-    "SELECT * FROM portfolio_entries LEFT JOIN images ON portfolio_entries.thumbnail_id = images.ID;";
+    "SELECT p.ID as portfolio_id, p.title, p.description, p.portfolio_type, p.creation_date, p.thumbnail_id, p.additional_description, p.link, i.ID as image_id, i.image_path, i.alt_text, i.image_type FROM portfolio_entries AS p LEFT JOIN images AS i ON p.thumbnail_id = i.ID;";
   db.all(query, function (error, portfolio_entries) {
     callback(error, portfolio_entries);
   });
@@ -68,7 +68,7 @@ exports.updatePortfolioEntry = function (entry, callback) {
       entry.title,
       entry.description,
       entry.portfolio_type,
-      entry.additionalDescription,
+      entry.additional_description,
       entry.link,
       entry.ID,
     ];
@@ -79,7 +79,7 @@ exports.updatePortfolioEntry = function (entry, callback) {
       entry.title,
       entry.description,
       entry.portfolio_type,
-      entry.additionalDescription,
+      entry.additional_description,
       entry.link,
       entry.thumbnail_id,
       entry.ID,

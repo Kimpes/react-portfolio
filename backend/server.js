@@ -21,13 +21,12 @@ app.get("/portfolioEntries", (rec, res) => {
 });
 
 app.get("/Entry/:ID", (rec, res) => {
-  console.log("time to fetch");
   const ID = rec.params.ID;
   db.getPortfolioEntryByID(ID, (error, portfolioEntryData) => {
     if (error) {
       res.status(500).json({ error: "Failed to retrieve portfolio entry." });
     } else {
-      console.log("Here's the");
+      console.log(portfolioEntryData);
       const portfolioEntry = {
         ID: portfolioEntryData[0].portfolio_id, // Take portfolio data from the first entry
         title: portfolioEntryData[0].title,
@@ -83,9 +82,9 @@ app.post("/Entry/:ID/Edit", upload.none(), (rec, res) => {
     ID,
     title: rec.body.title,
     description: rec.body.description,
-    type: rec.body.type,
-    thumbnail: rec.body.thumbnail,
-    additionalDescription: rec.body.additional_description,
+    portfolio_type: rec.body.type,
+    thumbnail_id: rec.body.thumbnail_id,
+    additional_description: rec.body.additional_description,
     link: rec.body.link,
   };
   db.updatePortfolioEntry(changes, (error) => {
