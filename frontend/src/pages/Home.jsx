@@ -12,16 +12,8 @@ export default function Home() {
           setPortfolioEntries(data);
         });
     }
-    async function fetchAllImages() {
-      await fetch("http://localhost:5000/images")
-        .then((res) => res.json())
-        .then((data) => {
-          setImages(data);
-        });
-    }
 
     fetchAllPortfolioEntries();
-    fetchAllImages();
   }, []);
 
   return (
@@ -50,21 +42,23 @@ export default function Home() {
             {(!!portfolioEntries && portfolioEntries).map((n) => {
               return (
                 <a
-                  key={n.ID}
-                  href={"/Entry/" + n.ID}
+                  key={n.portfolio_id}
+                  href={"/Entry/" + n.portfolio_id}
                   className="hoverShadow small clickable"
                 >
                   <li className="preview-portfolio-entry-card">
                     <div className="preview-portfolio-image-container">
                       <img
-                        src={`../../public/thumbnails/${n.thumbnail}`}
+                        src={`../../public/images/${n.image_path}`}
                         alt={n.alt_text}
                       />
                     </div>
                     <div className="preview-portfolio-info">
                       <div className="title-and-tag">
                         <h3>{n.title}</h3>
-                        <div className="btn btn-primary">{n.type}</div>
+                        <div className="btn btn-primary">
+                          {n.portfolio_type}
+                        </div>
                       </div>
                       <p>{n.description}</p>
                     </div>

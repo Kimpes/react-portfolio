@@ -14,7 +14,8 @@ db.run(
 // );
 
 exports.getAllPortfolioEntries = function (callback) {
-  const query = "SELECT * FROM portfolio_entries";
+  const query =
+    "SELECT * FROM portfolio_entries LEFT JOIN images ON portfolio_entries.thumbnail_id = images.ID;";
   db.all(query, function (error, portfolio_entries) {
     callback(error, portfolio_entries);
   });
