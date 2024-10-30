@@ -43,18 +43,20 @@ export default function Portfolio() {
             <p>{portfolioEntry.additional_description}</p>
             {!!portfolioEntry.images && (
               <div className="portfolio-entry-images-grid">
-                {portfolioEntry.images.map((image) => (
-                  <div
-                    className="portfolio-entry-image-container"
-                    key={image.ID}
-                  >
-                    <img
-                      src={`../../public/images/${image.image_path}`}
-                      alt={image.alt_text}
-                      className={`${image.type}`}
-                    />
-                  </div>
-                ))}
+                {portfolioEntry.images
+                  .filter((image) => image.type !== "thumbnail")
+                  .map((image) => (
+                    <div
+                      className="portfolio-entry-image-container"
+                      key={image.ID}
+                    >
+                      <img
+                        src={`../../public/images/${image.image_path}`}
+                        alt={image.alt_text}
+                        className={`${image.type}`}
+                      />
+                    </div>
+                  ))}
               </div>
             )}
             <div className="link-container">

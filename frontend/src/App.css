@@ -470,6 +470,7 @@ input.title {
 }
 
 .link-container {
+  margin-top: 15px;
   display: flex;
   flex-direction: row;
   gap: 10px;
