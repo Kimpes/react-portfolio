@@ -110,16 +110,16 @@ export default function Portfolio() {
                 />
               </div>
               <div className="input-pair">
-                <label htmlFor="type">Type</label>
+                <label htmlFor="portfolio_type">Type</label>
                 <input
                   type="text"
-                  name="type"
-                  value={portfolioEntry.type}
+                  name="portfolio_type"
+                  value={portfolioEntry.portfolio_type}
                   required={true}
                   onChange={(e) =>
                     setPortfolioEntry({
                       ...portfolioEntry,
-                      type: e.target.value,
+                      portfolio_type: e.target.value,
                     })
                   }
                 />

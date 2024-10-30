@@ -31,7 +31,7 @@ app.get("/Entry/:ID", (rec, res) => {
         ID: portfolioEntryData[0].portfolio_id, // Take portfolio data from the first entry
         title: portfolioEntryData[0].title,
         description: portfolioEntryData[0].description,
-        type: portfolioEntryData[0].portfolio_type,
+        portfolio_type: portfolioEntryData[0].portfolio_type,
         creation_date: portfolioEntryData[0].creation_date,
         thumbnail_id: portfolioEntryData[0].thumbnail_id,
         additional_description: portfolioEntryData[0].additional_description,
@@ -82,7 +82,7 @@ app.post("/Entry/:ID/Edit", upload.none(), (rec, res) => {
     ID,
     title: rec.body.title,
     description: rec.body.description,
-    portfolio_type: rec.body.type,
+    portfolio_type: rec.body.portfolio_type,
     thumbnail_id: rec.body.thumbnail_id,
     additional_description: rec.body.additional_description,
     link: rec.body.link,
