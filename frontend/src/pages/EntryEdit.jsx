@@ -23,9 +23,9 @@ export default function Portfolio() {
       }
     }
 
-    async function fetchImagesByEntry(ID) {
+    async function fetchAllImages() {
       try {
-        const res = await fetch("http://localhost:5000/imagesByEntry/" + ID);
+        const res = await fetch("http://localhost:5000/images");
         if (!res.ok) {
           throw new Error("Failed to fetch images");
         }
@@ -38,7 +38,7 @@ export default function Portfolio() {
     }
 
     fetchPortfolioEntry(queryID);
-    fetchImagesByEntry(queryID);
+    fetchAllImages();
   }, [queryID]);
 
   function handleImageTypeChange(imageID, newType) {
@@ -48,7 +48,12 @@ export default function Portfolio() {
       )
     );
   }
-
+  function handleThumbnailChange(imageID) {
+    setPortfolioEntry((prevPortfolioEntry) => ({
+      ...prevPortfolioEntry,
+      thumbnail_id: parseInt(imageID),
+    }));
+  }
   // Function to handle form submission (with help from chatGPT)
   const handleSubmit = async (event) => {
     event.preventDefault(); // Prevent the default form submission behavior
@@ -172,18 +177,34 @@ export default function Portfolio() {
               </div>
               <div className="input-pair">
                 <label htmlFor="thumbnail_id">Thumbnail</label>
-                <input
-                  type="text"
+                <select
                   name="thumbnail_id"
                   value={portfolioEntry.thumbnail_id}
                   required={true}
-                  onChange={(e) =>
-                    setPortfolioEntry({
-                      ...portfolioEntry,
-                      thumbnail_id: e.target.value,
-                    })
-                  }
-                />
+                  onChange={(e) => handleThumbnailChange(e.target.value)}
+                >
+                  {images.map((image) => (
+                    <option key={image.ID} value={image.ID}>
+                      {image.image_path}
+                    </option>
+                  ))}
+                </select>
+                <div className="preview-thumbnail">
+                  {(() => {
+                    const selectedImage = images?.find(
+                      (img) => img.ID === portfolioEntry.thumbnail_id
+                    );
+                    console.log(portfolioEntry);
+                    return (
+                      selectedImage && (
+                        <img
+                          src={`../../public/images/${selectedImage.image_path}`}
+                          alt=""
+                        />
+                      )
+                    );
+                  })()}
+                </div>
               </div>
               {!!portfolioEntry.images && (
                 <div className="portfolio-entry-images-edit">
