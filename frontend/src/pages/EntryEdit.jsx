@@ -125,6 +125,21 @@ export default function Portfolio() {
                 />
               </div>
               <div className="input-pair">
+                <label htmlFor="creation_date">Creation Year</label>
+                <input
+                  type="number"
+                  name="creation_date"
+                  value={portfolioEntry.creation_date}
+                  required={true}
+                  onChange={(e) =>
+                    setPortfolioEntry({
+                      ...portfolioEntry,
+                      creation_date: e.target.value,
+                    })
+                  }
+                />
+              </div>
+              <div className="input-pair">
                 <label htmlFor="description">Short Summary</label>
                 <textarea
                   name="description"

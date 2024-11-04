@@ -25,22 +25,21 @@ exports.createPortfolioEntry = function (
   title,
   description,
   portfolio_type,
+  creation_date,
   thumbnail_id,
-  additionalDescription,
+  additional_description,
   link,
   callback
 ) {
-  const currentTime = new Date();
-  const postDate = currentTime.getTime();
   const query =
-    "INSERT INTO portfolio_entries (title, description, creation_date, portfolio_type, thumbnail_id, additionalDescription, link) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    "INSERT INTO portfolio_entries (title, description, portfolio_type, creation_date, thumbnail_id, additional_description, link) VALUES (?, ?, ?, ?, ?, ?, ?)";
   const values = [
     title,
     description,
-    postDate,
     portfolio_type,
+    creation_date,
     thumbnail_id,
-    additionalDescription,
+    additional_description,
     link,
   ];
   db.run(query, values, function (error) {
@@ -63,22 +62,24 @@ exports.updatePortfolioEntry = function (entry, callback) {
   let values;
   if (entry.thumbnail_id == undefined) {
     query =
-      "UPDATE portfolio_entries SET title = ?, description = ?, portfolio_type = ?, additional_description = ?, link = ? WHERE ID = ?";
+      "UPDATE portfolio_entries SET title = ?, description = ?, portfolio_type = ?, creation_date = ?, additional_description = ?, link = ? WHERE ID = ?";
     values = [
       entry.title,
       entry.description,
       entry.portfolio_type,
+      entry.creation_date,
       entry.additional_description,
       entry.link,
       entry.ID,
     ];
   } else {
     query =
-      "UPDATE portfolio_entries SET title = ?, description = ?, portfolio_type = ?, additional_description = ?, link = ?, thumbnail_id = ? WHERE ID = ?";
+      "UPDATE portfolio_entries SET title = ?, description = ?, portfolio_type = ?, creation_date = ?, additional_description = ?, link = ?, thumbnail_id = ? WHERE ID = ?";
     values = [
       entry.title,
       entry.description,
       entry.portfolio_type,
+      entry.creation_date,
       entry.additional_description,
       entry.link,
       entry.thumbnail_id,

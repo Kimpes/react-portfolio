@@ -83,6 +83,7 @@ app.post("/Entry/:ID/Edit", upload.none(), (rec, res) => {
     title: rec.body.title,
     description: rec.body.description,
     portfolio_type: rec.body.portfolio_type,
+    creation_date: rec.body.creation_date,
     thumbnail_id: rec.body.thumbnail_id,
     additional_description: rec.body.additional_description,
     link: rec.body.link,
@@ -92,6 +93,24 @@ app.post("/Entry/:ID/Edit", upload.none(), (rec, res) => {
       res.status(500).json({ error: "Failed to update portfolio entry." });
     } else {
       res.status(200).json({ success: true, ID });
+    }
+  });
+});
+
+app.post("/Entry", upload.none(), (rec, res) => {
+  const newEntry = {
+    title: rec.body.title,
+    description: rec.body.description,
+    portfolio_type: rec.body.portfolio_type,
+    thumbnail_id: rec.body.thumbnail_id,
+    additional_description: rec.body.additional_description,
+    link: rec.body.link,
+  };
+  db.createPortfolioEntry(newEntry, (error) => {
+    if (error) {
+      res.status(500).json({ error: "Failed to add portfolio entry." });
+    } else {
+      res.status(200).json({ success: true });
     }
   });
 });

@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 export default function Portfolio() {
   const { ID: queryID } = useParams();
   const [portfolioEntry, setPortfolioEntry] = useState();
-  const [images, setImages] = useState([]);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -40,6 +39,7 @@ export default function Portfolio() {
         {!!portfolioEntry && (
           <div className="portfolio-entry" key={portfolioEntry.ID}>
             <h1>{portfolioEntry.title}</h1>
+            <p className="subtitle-small">{portfolioEntry.creation_date}</p>
             <p>{portfolioEntry.additional_description}</p>
             {!!portfolioEntry.images && (
               <div className="portfolio-entry-images-grid">

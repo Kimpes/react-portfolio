@@ -134,6 +134,13 @@ p.small {
   font-size: 0.8em;
   color: var(--dark-text);
 }
+.subtitle-small {
+  /* used in portfolio entries */
+  font-size: 1.2em;
+  color: var(--dark-text);
+  font-weight: 600;
+  font-style: italic;
+}
 @media screen and (max-width: 700px) {
   h1 {
     font-size: 10vw;
