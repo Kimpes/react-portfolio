@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 
 export default function Home() {
   const [portfolioEntries, setPortfolioEntries] = useState([]);
-  const [images, setImages] = useState([]);
 
   useEffect(() => {
     async function fetchAllPortfolioEntries() {
@@ -68,6 +67,13 @@ export default function Home() {
               );
             })}
           </ul>
+          <div className="contact-combo">
+            <a href="/EntryCreate">
+              <button className="btn btn-primary clickable large hoverShadow">
+                Create New Entry
+              </button>
+            </a>
+          </div>
         </section>
         <section id="contact">
           <div className="contact-container">

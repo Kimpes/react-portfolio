@@ -102,6 +102,7 @@ app.post("/Entry", upload.none(), (rec, res) => {
     title: rec.body.title,
     description: rec.body.description,
     portfolio_type: rec.body.portfolio_type,
+    creation_date: rec.body.creation_date,
     thumbnail_id: rec.body.thumbnail_id,
     additional_description: rec.body.additional_description,
     link: rec.body.link,

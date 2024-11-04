@@ -21,26 +21,17 @@ exports.getAllPortfolioEntries = function (callback) {
   });
 };
 
-exports.createPortfolioEntry = function (
-  title,
-  description,
-  portfolio_type,
-  creation_date,
-  thumbnail_id,
-  additional_description,
-  link,
-  callback
-) {
+exports.createPortfolioEntry = function (newEntry, callback) {
   const query =
     "INSERT INTO portfolio_entries (title, description, portfolio_type, creation_date, thumbnail_id, additional_description, link) VALUES (?, ?, ?, ?, ?, ?, ?)";
   const values = [
-    title,
-    description,
-    portfolio_type,
-    creation_date,
-    thumbnail_id,
-    additional_description,
-    link,
+    newEntry.title,
+    newEntry.description,
+    newEntry.portfolio_type,
+    newEntry.creation_date,
+    newEntry.thumbnail_id,
+    newEntry.additional_description,
+    newEntry.link,
   ];
   db.run(query, values, function (error) {
     callback(error);
