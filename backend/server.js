@@ -2,25 +2,11 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const db = require("./db.js");
+const multer = require("multer");
+const upload = multer();
 
 app.use(cors());
-
-const portfolioEntries = [
-  {
-    ID: 1,
-    title: "This current website",
-    description:
-      "This current website that you are viewing was built in React.js and Express.js. It's deployed on AWS and connects to a database of portfolio entries via SQLite",
-    image: "/portfolio_images/Coloured Dot Apple.jpg",
-  },
-  {
-    ID: 2,
-    title: "A copy of the previous entry",
-    description:
-      "This current website that you are viewing was built in React.js and Express.js. It's deployed on AWS and connects to a database of portfolio entries via SQLite",
-    image: "/portfolio_images/Coloured Dot Apple.jpg",
-  },
-];
+app.use(express.urlencoded({ extended: true }));
 
 app.get("/portfolioEntries", (rec, res) => {
   db.getAllPortfolioEntries((error, portfolioEntries) => {
@@ -36,10 +22,30 @@ app.get("/portfolioEntries", (rec, res) => {
 
 app.get("/Entry/:ID", (rec, res) => {
   const ID = rec.params.ID;
-  db.getPortfolioEntryByID(ID, (error, portfolioEntry) => {
+  db.getPortfolioEntryByID(ID, (error, portfolioEntryData) => {
     if (error) {
       res.status(500).json({ error: "Failed to retrieve portfolio entry." });
+    } else if (portfolioEntryData.length === 0) {
+      res.status(404).json({ error: "Portfolio entry not found." });
     } else {
+      console.log(portfolioEntryData);
+      const portfolioEntry = {
+        ID: portfolioEntryData[0].portfolio_id, // Take portfolio data from the first entry
+        title: portfolioEntryData[0].title,
+        description: portfolioEntryData[0].description,
+        portfolio_type: portfolioEntryData[0].portfolio_type,
+        creation_date: portfolioEntryData[0].creation_date,
+        thumbnail_id: portfolioEntryData[0].thumbnail_id,
+        additional_description: portfolioEntryData[0].additional_description,
+        link: portfolioEntryData[0].link,
+        images: portfolioEntryData.map((entry) => ({
+          ID: entry.image_id,
+          image_path: entry.image_path,
+          alt_text: entry.alt_text,
+          type: entry.image_type,
+        })), // Map over all entries to collect images
+      };
+
       res.status(200).json(portfolioEntry);
       console.log("Successfully retrieved portfolio entry.");
       console.log(portfolioEntry);
@@ -72,8 +78,71 @@ app.get("/imagesByEntry/:ID", (rec, res) => {
   });
 });
 
+app.get("/thumbnailByEntry/:ID", (rec, res) => {
+  const ID = rec.params.ID;
+  console.log("lets get the thumbnail");
+  db.getThumbnailByEntryID(ID, (error, thumbnail) => {
+    console.log(thumbnail);
+    if (error) {
+      res.status(500).json({ error: "Failed to retrieve thumbnail." });
+    } else {
+      res.status(200).json(thumbnail);
+      console.log("Successfully retrieved thumbnail.");
+      console.log(thumbnail);
+    }
+  });
+});
+
+app.post("/Entry/:ID/Edit", upload.none(), (rec, res) => {
+  const ID = rec.params.ID;
+  const changes = {
+    ID,
+    title: rec.body.title,
+    description: rec.body.description,
+    portfolio_type: rec.body.portfolio_type,
+    creation_date: rec.body.creation_date,
+    thumbnail_id: rec.body.thumbnail_id,
+    additional_description: rec.body.additional_description,
+    link: rec.body.link,
+  };
+  db.updatePortfolioEntry(changes, (error) => {
+    if (error) {
+      res.status(500).json({ error: "Failed to update portfolio entry." });
+    } else {
+      res.status(200).json({ success: true, ID });
+    }
+  });
+});
+
+app.post("/Entry/:ID/Delete", (rec, res) => {
+  const ID = rec.params.ID;
+  db.deletePortfolioEntry(ID, (error) => {
+    if (error) {
+      res.status(500).json({ error: "Failed to delete portfolio entry." });
+    } else {
+      res.status(200).json({ success: true, ID });
+    }
+  });
+});
+
+app.post("/Entry", upload.none(), (rec, res) => {
+  const newEntry = {
+    title: rec.body.title,
+    description: rec.body.description,
+    portfolio_type: rec.body.portfolio_type,
+    creation_date: rec.body.creation_date,
+    thumbnail_id: rec.body.thumbnail_id,
+    additional_description: rec.body.additional_description,
+    link: rec.body.link,
+  };
+  db.createPortfolioEntry(newEntry, (error) => {
+    if (error) {
+      res.status(500).json({ error: "Failed to add portfolio entry." });
+    } else {
+      res.status(200).json({ success: true });
+    }
+  });
+});
+
 app.listen(5000);
 console.log("running");
-
-// TODO
-// - tackle running the server and app in one command
