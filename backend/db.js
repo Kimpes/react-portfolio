@@ -104,3 +104,12 @@ exports.getImagesByEntryID = function (id, callback) {
     callback(error, images);
   });
 };
+
+exports.getThumbnailByEntryID = function (id, callback) {
+  const query = "SELECT * FROM images WHERE ID = ?";
+  const values = [id];
+  console.log("we are in the database");
+  db.get(query, values, function (error, thumbnail) {
+    callback(error, thumbnail);
+  });
+};

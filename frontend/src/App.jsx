@@ -8,6 +8,7 @@ import Entry from "./pages/Entry.jsx";
 import EntryEdit from "./pages/EntryEdit.jsx";
 import NoPage from "./pages/NoPage.jsx";
 import EntryCreate from "./pages/EntryCreate.jsx";
+import DeleteConfirmation from "./pages/DeleteConfirmation.jsx";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Routes>
             <Route index element={<Home />} />
             <Route path="/Entry/:ID/Edit" element={<EntryEdit />} />
+            <Route path="/Entry/:ID/Delete" element={<DeleteConfirmation />} />
             <Route path="/Entry/:ID" element={<Entry />} />
             <Route path="/EntryCreate" element={<EntryCreate />} />
             <Route path="*" element={<NoPage />} />

@@ -41,7 +41,7 @@ export default function Portfolio() {
             <h1>{portfolioEntry.title}</h1>
             <p className="subtitle-small">{portfolioEntry.creation_date}</p>
             <p>{portfolioEntry.additional_description}</p>
-            {!!portfolioEntry.images && (
+            {!!portfolioEntry.images && portfolioEntry.images[0].ID && (
               <div className="portfolio-entry-images-grid">
                 {portfolioEntry.images
                   .filter((image) => image.type !== "thumbnail")
@@ -51,7 +51,7 @@ export default function Portfolio() {
                       key={image.ID}
                     >
                       <img
-                        src={`../../public/images/${image.image_path}`}
+                        src={`/images/${image.image_path}`}
                         alt={image.alt_text}
                         className={`${image.type}`}
                       />
@@ -68,6 +68,11 @@ export default function Portfolio() {
               <a href={`/Entry/${portfolioEntry.ID}/Edit`}>
                 <button className="btn btn-primary clickable large hoverShadow">
                   Edit
+                </button>
+              </a>
+              <a href={`/Entry/${portfolioEntry.ID}/Delete`}>
+                <button className="btn btn-primary clickable large hoverShadow deletion">
+                  Delete
                 </button>
               </a>
             </div>

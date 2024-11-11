@@ -25,6 +25,8 @@ app.get("/Entry/:ID", (rec, res) => {
   db.getPortfolioEntryByID(ID, (error, portfolioEntryData) => {
     if (error) {
       res.status(500).json({ error: "Failed to retrieve portfolio entry." });
+    } else if (portfolioEntryData.length === 0) {
+      res.status(404).json({ error: "Portfolio entry not found." });
     } else {
       console.log(portfolioEntryData);
       const portfolioEntry = {
@@ -76,6 +78,21 @@ app.get("/imagesByEntry/:ID", (rec, res) => {
   });
 });
 
+app.get("/thumbnailByEntry/:ID", (rec, res) => {
+  const ID = rec.params.ID;
+  console.log("lets get the thumbnail");
+  db.getThumbnailByEntryID(ID, (error, thumbnail) => {
+    console.log(thumbnail);
+    if (error) {
+      res.status(500).json({ error: "Failed to retrieve thumbnail." });
+    } else {
+      res.status(200).json(thumbnail);
+      console.log("Successfully retrieved thumbnail.");
+      console.log(thumbnail);
+    }
+  });
+});
+
 app.post("/Entry/:ID/Edit", upload.none(), (rec, res) => {
   const ID = rec.params.ID;
   const changes = {
@@ -91,6 +108,17 @@ app.post("/Entry/:ID/Edit", upload.none(), (rec, res) => {
   db.updatePortfolioEntry(changes, (error) => {
     if (error) {
       res.status(500).json({ error: "Failed to update portfolio entry." });
+    } else {
+      res.status(200).json({ success: true, ID });
+    }
+  });
+});
+
+app.post("/Entry/:ID/Delete", (rec, res) => {
+  const ID = rec.params.ID;
+  db.deletePortfolioEntry(ID, (error) => {
+    if (error) {
+      res.status(500).json({ error: "Failed to delete portfolio entry." });
     } else {
       res.status(200).json({ success: true, ID });
     }

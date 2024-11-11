@@ -48,10 +48,7 @@ export default function Home() {
                 >
                   <li className="preview-portfolio-entry-card">
                     <div className="preview-portfolio-image-container">
-                      <img
-                        src={`../../public/images/${n.image_path}`}
-                        alt={n.alt_text}
-                      />
+                      <img src={`/images/${n.image_path}`} alt={n.alt_text} />
                     </div>
                     <div className="preview-portfolio-info">
                       <div className="title-and-tag">

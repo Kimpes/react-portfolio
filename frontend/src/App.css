@@ -6,7 +6,7 @@
   --background: #333533;
   --background-dark: #2f312f;
   --background-light: #585b58;
-  --danger: #d43b36;
+  --danger: #dc4a93;
 
   --shadow: rgba(0, 0, 0, 0.2);
 }
@@ -51,11 +51,11 @@
   border-color: var(--accent);
   color: var(--off-black);
 }
-.btn-primary.deletion {
+.btn.btn-primary.large.deletion {
   border-color: var(--danger);
   color: var(--danger);
 }
-.btn-primary.deletion:hover {
+.btn.btn-primary.large.deletion:hover {
   background: var(--danger);
   border-color: var(--danger);
   color: var(--off-black);
@@ -271,6 +271,7 @@ input.title {
 }
 
 .contact-combo {
+  margin-top: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -337,6 +338,11 @@ input.title {
 
 .preview-portfolio-image-container > img {
   max-width: 400px;
+  display: block;
+}
+
+.preview-portfolio-image-container.small > img {
+  max-width: 200px;
   display: block;
 }
 
