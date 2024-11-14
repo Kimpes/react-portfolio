@@ -9,6 +9,8 @@ import EntryEdit from "./pages/EntryEdit.jsx";
 import NoPage from "./pages/NoPage.jsx";
 import EntryCreate from "./pages/EntryCreate.jsx";
 import DeleteConfirmation from "./pages/DeleteConfirmation.jsx";
+import ImageTable from "./pages/ImageTable.jsx";
+import ImageEdit from "./pages/ImageEdit.jsx";
 
 function App() {
   return (
@@ -22,6 +24,8 @@ function App() {
             <Route path="/Entry/:ID/Delete" element={<DeleteConfirmation />} />
             <Route path="/Entry/:ID" element={<Entry />} />
             <Route path="/EntryCreate" element={<EntryCreate />} />
+            <Route path="/Images" element={<ImageTable />} />
+            <Route path="/Images/Edit/:ID" element={<ImageEdit />} />
             <Route path="*" element={<NoPage />} />
           </Routes>
         </Router>

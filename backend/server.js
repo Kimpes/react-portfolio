@@ -21,10 +21,11 @@ app.get("/portfolioEntries", (rec, res) => {
 });
 
 app.get("/Entry/:ID", (rec, res) => {
+  console.log("lets get the entry");
   const ID = rec.params.ID;
   db.getPortfolioEntryByID(ID, (error, portfolioEntryData) => {
     if (error) {
-      res.status(500).json({ error: "Failed to retrieve portfolio entry." });
+      res.status(500).json({ error });
     } else if (portfolioEntryData.length === 0) {
       res.status(404).json({ error: "Portfolio entry not found." });
     } else {
@@ -43,6 +44,7 @@ app.get("/Entry/:ID", (rec, res) => {
           image_path: entry.image_path,
           alt_text: entry.alt_text,
           type: entry.image_type,
+          order: entry.order,
         })), // Map over all entries to collect images
       };
 
@@ -79,6 +81,7 @@ app.get("/imagesByEntry/:ID", (rec, res) => {
 });
 
 app.get("/thumbnailByEntry/:ID", (rec, res) => {
+  //TODO: change name of function, cause we are using it for both images and thumbnails
   const ID = rec.params.ID;
   console.log("lets get the thumbnail");
   db.getThumbnailByEntryID(ID, (error, thumbnail) => {

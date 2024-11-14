@@ -508,3 +508,26 @@ input.title {
   position: relative;
   right: 2px;
 } */
+
+/*---------------------------------- Image Table ----------------------------------*/
+
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(200px, 1fr)
+  ); /* Adjust 200px to your desired width */
+  gap: 16px;
+  width: 100%;
+}
+
+.image-cell {
+  width: 100%;
+}
+
+.image-cell img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+}
