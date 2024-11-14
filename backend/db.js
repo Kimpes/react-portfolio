@@ -9,10 +9,6 @@ db.run(
   "CREATE TABLE IF NOT EXISTS images ( ID INTEGER NOT NULL PRIMARY KEY, associated_entry_ID	INTEGER NOT NULL, image_path TEXT NOT NULL, alt_text TEXT, image_type TEXT, FOREIGN KEY(associated_entry_ID) REFERENCES portfolio_entries(ID) )"
 );
 
-// db.run(
-//   'INSERT INTO images (associated_entry_ID, image_path, alt_text, type) VALUES (1, "images/funkyImage.png", "a funky image", "normal")'
-// );
-
 exports.getAllPortfolioEntries = function (callback) {
   const query =
     "SELECT p.ID as portfolio_id, p.title, p.description, p.portfolio_type, p.creation_date, p.thumbnail_id, p.additional_description, p.link, i.ID as image_id, i.image_path, i.alt_text, i.image_type FROM portfolio_entries AS p LEFT JOIN images AS i ON p.thumbnail_id = i.ID;";
@@ -39,9 +35,8 @@ exports.createPortfolioEntry = function (newEntry, callback) {
 };
 
 exports.getPortfolioEntryByID = function (id, callback) {
-  console.log("im in the database");
   const query =
-    "SELECT p.ID as portfolio_id, p.title, p.description, p.portfolio_type, p.creation_date, p.thumbnail_id, p.additional_description, p.link, i.ID as image_id, i.image_path, i.alt_text, i.image_type FROM portfolio_entries AS p LEFT JOIN images AS i ON p.ID = i.associated_entry_id WHERE p.ID = ?;";
+    "SELECT p.ID as portfolio_id, p.title, p.description, p.portfolio_type, p.creation_date, p.thumbnail_id, p.additional_description, p.link, i.ID as image_id, i.image_path, i.alt_text, i.image_type, i.order FROM portfolio_entries AS p LEFT JOIN images AS i ON p.ID = i.associated_entry_id WHERE p.ID = ?;";
   const values = [id];
   db.all(query, values, function (error, entry) {
     callback(error, entry);
@@ -52,6 +47,7 @@ exports.updatePortfolioEntry = function (entry, callback) {
   let query;
   let values;
   if (entry.thumbnail_id == undefined) {
+    //this code is quite old, it should probably be refactored
     query =
       "UPDATE portfolio_entries SET title = ?, description = ?, portfolio_type = ?, creation_date = ?, additional_description = ?, link = ? WHERE ID = ?";
     values = [
@@ -111,5 +107,61 @@ exports.getThumbnailByEntryID = function (id, callback) {
   console.log("we are in the database");
   db.get(query, values, function (error, thumbnail) {
     callback(error, thumbnail);
+  });
+};
+
+exports.createImage = function (newImage, callback) {
+  let query;
+  let values;
+  if (!newImage.order) {
+    //the order is optional
+    query =
+      "INSERT INTO images (associated_entry_ID, image_path, alt_text, image_type) VALUES (?, ?, ?, ?)";
+    values = [
+      newImage.associated_entry_ID,
+      newImage.image_path,
+      newImage.alt_text,
+      newImage.image_type,
+    ];
+  } else {
+    query =
+      "INSERT INTO images (associated_entry_ID, image_path, alt_text, image_type, order) VALUES (?, ?, ?, ?, ?)";
+    values = [
+      newImage.associated_entry_ID,
+      newImage.image_path,
+      newImage.alt_text,
+      newImage.image_type,
+      newImage.order,
+    ];
+  }
+
+  db.run(query, values, function (error) {
+    callback(error);
+  });
+};
+
+exports.updateImage = function (image, callback) {
+  //should i verify if order is declared? it will become null if not
+  const query =
+    "UPDATE images SET associated_entry_ID = ?, image_path = ?, alt_text = ?, image_type = ?, order = ? WHERE ID = ?";
+  const values = [
+    image.associated_entry_ID,
+    image.image_path, //should this be editable? probably not
+    image.alt_text,
+    image.image_type,
+    image.order,
+    image.ID,
+  ];
+  db.run(query, values, function (error) {
+    callback(error);
+  });
+};
+
+exports.deleteImage = function (id, callback) {
+  //how do i delete it from the files as well?
+  const query = "DELETE FROM images WHERE ID = ?";
+  const values = [id];
+  db.get(query, values, function (error) {
+    callback(error);
   });
 };
