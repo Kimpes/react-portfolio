@@ -49,9 +49,14 @@ export default function Portfolio() {
     );
   }
   function handleThumbnailChange(imageID) {
+    const parsedImageID = parseInt(imageID);
+    if (Number.isNaN(parsedImageID)) {
+      console.error("Invalid image:", imageID);
+      return;
+    }
     setPortfolioEntry((prevPortfolioEntry) => ({
       ...prevPortfolioEntry,
-      thumbnail_id: parseInt(imageID),
+      thumbnail_id: parsedImageID,
     }));
   }
   // Function to handle form submission (with help from chatGPT)

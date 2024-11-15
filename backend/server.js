@@ -44,7 +44,7 @@ app.get("/Entry/:ID", (rec, res) => {
           image_path: entry.image_path,
           alt_text: entry.alt_text,
           type: entry.image_type,
-          order: entry.order,
+          display_order: entry.display_order,
         })), // Map over all entries to collect images
       };
 
@@ -143,6 +143,23 @@ app.post("/Entry", upload.none(), (rec, res) => {
       res.status(500).json({ error: "Failed to add portfolio entry." });
     } else {
       res.status(200).json({ success: true });
+    }
+  });
+});
+
+app.post("/Image/:ID/Edit", upload.none(), (rec, res) => {
+  const ID = rec.params.ID;
+  const changes = {
+    ID,
+    alt_text: rec.body.alt_text,
+    type: rec.body.type,
+    display_order: rec.body.display_order,
+  };
+  db.updateImage(changes, (error) => {
+    if (error) {
+      res.status(500).json({ error: "Failed to update image." });
+    } else {
+      res.status(200).json({ success: true, ID });
     }
   });
 });

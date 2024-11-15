@@ -61,6 +61,11 @@
   color: var(--off-black);
 }
 
+.sub-shadow:has(a:hover) {
+  transform: scale(1.05);
+  filter: drop-shadow(-3px 3px 3px var(--shadow));
+}
+
 /*---------------------------------- Main Containers ----------------------------------*/
 * {
   margin: 0px;

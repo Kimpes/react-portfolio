@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 export default function Portfolio() {
   const { ID: queryID } = useParams();
   const [image, setImage] = useState();
+  const [portfolioEntries, setPortfolioEntries] = useState([]);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
@@ -22,11 +23,34 @@ export default function Portfolio() {
         console.error(err);
       }
     }
+    async function fetchAllPortfolioEntries() {
+      //TODO: change this to only fetch titles and IDs? might be faster
+      await fetch("http://localhost:5000/portfolioEntries")
+        .then((res) => res.json())
+        .then((data) => {
+          setPortfolioEntries(data);
+          console.log(portfolioEntries);
+        });
+    }
+
+    fetchAllPortfolioEntries();
     fetchImage(queryID);
   }, [queryID]);
 
-  // Function to handle form submission (with help from chatGPT)
+  const handleAssociatedEntryChange = (entry_id) => {
+    const parsedEntryId = parseInt(entry_id);
+    if (Number.isNaN(parsedEntryId)) {
+      console.error("Invalid entry:", entry_id);
+      return;
+    }
+    setImage({
+      ...image,
+      associated_entry_ID: parseInt(parsedEntryId),
+    });
+  };
+
   const handleSubmit = async (event) => {
+    // Function to handle form submission (with help from chatGPT)
     event.preventDefault(); // Prevent the default form submission behavior
     try {
       const formData = new FormData(event.target); // Collect form data
@@ -60,7 +84,6 @@ export default function Portfolio() {
   return (
     <>
       <main>
-        <h1>Image Edit</h1>
         <form onSubmit={handleSubmit}>
           <div className="portfolio-entry-edit">
             {!!image && (
@@ -78,12 +101,7 @@ export default function Portfolio() {
                     name="image_path"
                     value={image.image_path}
                     placeholder="Image Path"
-                    onChange={(e) =>
-                      setImage({
-                        ...image,
-                        image_path: e.target.value, //probably shouldn't be able to be changed actually. remove later
-                      })
-                    }
+                    readOnly={true}
                   />
                 </div>
                 <div className="input-pair">
@@ -119,18 +137,46 @@ export default function Portfolio() {
                   </select>
                 </div>
                 <div className="input-pair">
-                  <label htmlFor="order">Order (Optional)</label>
+                  <label htmlFor="display_order">
+                    Display Order (Optional)
+                  </label>
                   <input
                     type="number"
-                    name="order"
-                    value={image.order}
+                    name="display_order"
+                    value={image.display_order}
                     onChange={(e) =>
                       setImage({
                         ...image,
-                        order: e.target.value,
+                        display_order: e.target.value,
                       })
                     }
                   ></input>
+                </div>
+                <div className="input-pair">
+                  <label htmlFor="associated_entry_ID">
+                    Associated Portfolio Entry
+                  </label>
+                  <select
+                    name="associated_entry_ID"
+                    value={image.associated_entry_ID}
+                    required={true}
+                    onChange={(e) =>
+                      handleAssociatedEntryChange(e.target.value)
+                    }
+                  >
+                    {portfolioEntries.map(
+                      (
+                        portfolioEntry //cycle through all portfolio entries titles
+                      ) => (
+                        <option
+                          key={portfolioEntry.portfolio_id}
+                          value={portfolioEntry.portfolio_id}
+                        >
+                          {portfolioEntry.title}
+                        </option>
+                      )
+                    )}
+                  </select>
                 </div>
               </div>
             )}

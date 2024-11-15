@@ -146,10 +146,9 @@ exports.createImage = function (newImage, callback) {
 exports.updateImage = function (image, callback) {
   //TODO: should i verify if order is declared? it will become null if not
   const query =
-    "UPDATE images SET associated_entry_ID = ?, image_path = ?, alt_text = ?, image_type = ?, order = ? WHERE ID = ?";
+    "UPDATE images SET associated_entry_ID = ?, alt_text = ?, image_type = ?, order = ? WHERE ID = ?";
   const values = [
-    image.associated_entry_ID,
-    image.image_path, //should this be editable? probably not
+    image.associated_entry_ID, //TODO: standardise capitalisation.
     image.alt_text,
     image.image_type,
     image.order,
