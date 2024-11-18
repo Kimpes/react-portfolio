@@ -34,27 +34,11 @@ export default function Home() {
             ))}
           </div>
           <div className="contact-combo">
-            <a href="/EntryCreate">
+            <a href="/Images/Create">
               <button className="btn btn-primary clickable large hoverShadow">
-                Create New Entry
+                Upload New Image
               </button>
             </a>
-          </div>
-        </section>
-        <section id="contact">
-          <div className="contact-container">
-            <div className="contact-left">
-              <h2>Feel free to contact me!</h2>
-            </div>
-            <div className="contact-right">
-              <p>You can easily reach me through my email</p>
-              <a
-                href="mailto:gustafssonfilip@hotmail.com"
-                className="hoverShadow"
-              >
-                gustafssonfilip@hotmail.com
-              </a>
-            </div>
           </div>
         </section>
       </main>

@@ -64,12 +64,15 @@ export default function Home() {
               );
             })}
           </ul>
-          <div className="contact-combo">
+          <div className="link-container">
             <a href="/EntryCreate">
               <button className="btn btn-primary clickable large hoverShadow">
                 Create New Entry
               </button>
             </a>
+            <a href="/Images"><button className="btn btn-primary clickable large hoverShadow">
+            Image Table
+              </button></a>
           </div>
         </section>
         <section id="contact">

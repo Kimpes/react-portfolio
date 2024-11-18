@@ -9,20 +9,6 @@ export default function Portfolio() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    async function fetchImage(ID) {
-      try {
-        const res = await fetch("http://localhost:5000/thumbnailByEntry/" + ID);
-        if (!res.ok) {
-          throw new Error("Failed to fetch image");
-        }
-        const data = await res.json();
-        setImage(data);
-        console.log(image);
-      } catch (err) {
-        setError(err.message);
-        console.error(err);
-      }
-    }
     async function fetchAllPortfolioEntries() {
       //TODO: change this to only fetch titles and IDs? might be faster
       await fetch("http://localhost:5000/portfolioEntries")
@@ -34,7 +20,6 @@ export default function Portfolio() {
     }
 
     fetchAllPortfolioEntries();
-    fetchImage(queryID);
   }, [queryID]);
 
   const handleAssociatedEntryChange = (entry_id) => {
@@ -56,7 +41,7 @@ export default function Portfolio() {
       const formData = new FormData(event.target); // Collect form data
       console.log(formData);
       const response = await fetch(
-        `http://localhost:5000/Image/${image.ID}/Edit`,
+        `http://localhost:5000/Image/Create`,
         {
           method: "POST",
           body: formData, // Sending form data
@@ -77,7 +62,7 @@ export default function Portfolio() {
     return <p>Error: {error}</p>;
   }
 
-  if (!image) {
+  if (!portfolioEntries) {
     return <p>Loading...</p>; // Shows a loading message while the data is fetched
   }
 
@@ -86,22 +71,14 @@ export default function Portfolio() {
       <main>
         <form onSubmit={handleSubmit}>
           <div className="portfolio-entry-edit">
-            {!!image && (
               <div className="portfolio-entry-images-edit">
-                <div className="portfolio-entry-image-container">
-                  <img
-                    src={`/images/${image.image_path}`}
-                    alt={image.alt_text}
-                  />
-                </div>
                 <div className="input-pair">
-                  <label htmlFor="image_path">Image Path</label>
+                  <label htmlFor="upload">Upload Image</label>
                   <input
-                    type="text"
-                    name="image_path"
-                    value={image.image_path}
-                    placeholder="Image Path"
-                    readOnly={true}
+                    type="file"
+                    name="upload"
+                    required={true}
+                    onChange={(e) => setImage(e.target.files[0])}
                   />
                 </div>
                 <div className="input-pair">
@@ -109,8 +86,8 @@ export default function Portfolio() {
                   <input
                     type="text"
                     name="alt_text"
-                    value={image.alt_text}
                     placeholder="Alt Text"
+                    required={true}
                     onChange={(e) =>
                       setImage({
                         ...image,
@@ -123,7 +100,6 @@ export default function Portfolio() {
                   <label htmlFor="type">Type</label>
                   <select
                     name="type"
-                    value={image.type}
                     onChange={(e) =>
                       setImage({
                         ...image,
@@ -143,7 +119,7 @@ export default function Portfolio() {
                   <input
                     type="number"
                     name="display_order"
-                    value={image.display_order}
+                    value="0"
                     onChange={(e) =>
                       setImage({
                         ...image,
@@ -158,7 +134,6 @@ export default function Portfolio() {
                   </label>
                   <select
                     name="associated_entry_ID"
-                    value={image.associated_entry_ID}
                     required={true}
                     onChange={(e) =>
                       handleAssociatedEntryChange(e.target.value)
@@ -179,7 +154,6 @@ export default function Portfolio() {
                   </select>
                 </div>
               </div>
-            )}
           </div>
           <div className="link-container">
             <button
