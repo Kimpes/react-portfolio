@@ -64,7 +64,7 @@ export default function Home() {
               );
             })}
           </ul>
-          <div className="link-container">
+          <div className="link-container homepage">
             <a href="/EntryCreate">
               <button className="btn btn-primary clickable large hoverShadow">
                 Create New Entry

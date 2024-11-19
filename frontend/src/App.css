@@ -495,6 +495,10 @@ input.title {
   width: 100%;
   justify-content: center;
 }
+.link-container.homepage {
+  margin-top: 30px;
+  justify-content: flex-start;
+}
 
 @media screen and (max-width: 700px) {
   .portfolio-entry > h1 {
