@@ -5,6 +5,8 @@ const db = require("./db.js");
 const multer = require("multer");
 const upload = multer();
 
+const IS_LOGGED_IN_BACKEND = false;
+
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 
@@ -97,6 +99,11 @@ app.get("/thumbnailByEntry/:ID", (rec, res) => {
 });
 
 app.post("/Entry/:ID/Edit", upload.none(), (rec, res) => {
+  if (!IS_LOGGED_IN_BACKEND) {
+    console.log("Not logged in.");
+    return res.status(401).json({ error: "Not logged in." });
+    //TODO: give better feedback to user. error doesn't display on frontend
+  }
   const ID = rec.params.ID;
   const changes = {
     ID,
@@ -118,6 +125,11 @@ app.post("/Entry/:ID/Edit", upload.none(), (rec, res) => {
 });
 
 app.post("/Entry/:ID/Delete", (rec, res) => {
+  if (!IS_LOGGED_IN_BACKEND) {
+    console.log("Not logged in.");
+    return res.status(401).json({ error: "Not logged in." });
+    //TODO: give better feedback to user. error doesn't display on frontend
+  }
   const ID = rec.params.ID;
   db.deletePortfolioEntry(ID, (error) => {
     if (error) {
@@ -129,6 +141,11 @@ app.post("/Entry/:ID/Delete", (rec, res) => {
 });
 
 app.post("/Entry", upload.none(), (rec, res) => {
+  if (!IS_LOGGED_IN_BACKEND) {
+    console.log("Not logged in.");
+    return res.status(401).json({ error: "Not logged in." });
+    //TODO: give better feedback to user. error doesn't display on frontend
+  }
   const newEntry = {
     title: rec.body.title,
     description: rec.body.description,
@@ -148,6 +165,11 @@ app.post("/Entry", upload.none(), (rec, res) => {
 });
 
 app.post("/Image/:ID/Edit", upload.none(), (rec, res) => {
+  if (!IS_LOGGED_IN_BACKEND) {
+    console.log("Not logged in.");
+    return res.status(401).json({ error: "Not logged in." });
+    //TODO: give better feedback to user. error doesn't display on frontend
+  }
   const ID = rec.params.ID;
   const changes = {
     ID,

@@ -64,6 +64,8 @@ export default function Home() {
               );
             })}
           </ul>
+          {//TODO: Only show the add entry button if the user is logged in
+              }
           <div className="link-container homepage">
             <a href="/EntryCreate">
               <button className="btn btn-primary clickable large hoverShadow">

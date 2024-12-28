@@ -13,6 +13,9 @@ import ImageTable from "./pages/ImageTable.jsx";
 import ImageEdit from "./pages/ImageEdit.jsx";
 import ImageCreate from "./pages/ImageCreate.jsx";
 
+const IS_LOGGED_IN_FRONTEND = true;
+//TODO: add error page for forbidden pages
+
 function App() {
   return (
     <>
@@ -21,13 +24,13 @@ function App() {
         <Router>
           <Routes>
             <Route index element={<Home />} />
-            <Route path="/Entry/:ID/Edit" element={<EntryEdit />} />
-            <Route path="/Entry/:ID/Delete" element={<DeleteConfirmation />} />
+            <Route path="/Entry/:ID/Edit" element={IS_LOGGED_IN_FRONTEND ? <EntryEdit /> : <Home />} />
+            <Route path="/Entry/:ID/Delete" element={IS_LOGGED_IN_FRONTEND ? <DeleteConfirmation /> : <Home />} />
             <Route path="/Entry/:ID" element={<Entry />} />
-            <Route path="/EntryCreate" element={<EntryCreate />} />
+            <Route path="/EntryCreate" element={IS_LOGGED_IN_FRONTEND ? <EntryCreate /> : <Home />} />
             <Route path="/Images" element={<ImageTable />} />
-            <Route path="/Images/Edit/:ID" element={<ImageEdit />} />
-            <Route path="/Images/Create" element={<ImageCreate />} />
+            <Route path="/Images/Edit/:ID" element={IS_LOGGED_IN_FRONTEND ? <ImageEdit /> : <Home />} />
+            <Route path="/Images/Create" element={IS_LOGGED_IN_FRONTEND ? <ImageCreate /> : <Home />} />
             <Route path="*" element={<NoPage />} />
           </Routes>
         </Router>
