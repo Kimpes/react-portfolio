@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 export default function Portfolio() {
   const { ID: queryID } = useParams();
   const [image, setImage] = useState();
+  const [imageUpload, setImageUpload] = useState();
   const [portfolioEntries, setPortfolioEntries] = useState([]);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
@@ -39,19 +40,17 @@ export default function Portfolio() {
     event.preventDefault(); // Prevent the default form submission behavior
     try {
       const formData = new FormData(event.target); // Collect form data
+      console.log("time to start");
       console.log(formData);
-      const response = await fetch(
-        `http://localhost:5000/Image/Create`,
-        {
-          method: "POST",
-          body: formData, // Sending form data
-        }
-      );
+      const response = await fetch(`http://localhost:5000/Image/Create`, {
+        method: "POST",
+        body: formData, // Sending form data
+      });
       if (!response.ok) {
         throw new Error("Failed to update portfolio image entry.");
       }
       // If the submission is successful, navigate back to the image table
-      navigate(`/ImageTable`);
+      navigate(`/Images`);
     } catch (error) {
       console.error(error);
       setError("Failed to update the image entry.");
@@ -71,89 +70,85 @@ export default function Portfolio() {
       <main>
         <form onSubmit={handleSubmit}>
           <div className="portfolio-entry-edit">
-              <div className="portfolio-entry-images-edit">
-                <div className="input-pair">
-                  <label htmlFor="upload">Upload Image</label>
-                  <input
-                    type="file"
-                    name="upload"
-                    required={true}
-                    onChange={(e) => setImage(e.target.files[0])}
-                  />
-                </div>
-                <div className="input-pair">
-                  <label htmlFor="alt_text">Alt Text</label>
-                  <input
-                    type="text"
-                    name="alt_text"
-                    placeholder="Alt Text"
-                    required={true}
-                    onChange={(e) =>
-                      setImage({
-                        ...image,
-                        alt_text: e.target.value,
-                      })
-                    }
-                  />
-                </div>
-                <div className="input-pair">
-                  <label htmlFor="type">Type</label>
-                  <select
-                    name="type"
-                    onChange={(e) =>
-                      setImage({
-                        ...image,
-                        type: e.target.value,
-                      })
-                    }
-                  >
-                    <option value="small">Small</option>
-                    <option value="large">Large</option>
-                    <option value="large">Thumbnail</option>
-                  </select>
-                </div>
-                <div className="input-pair">
-                  <label htmlFor="display_order">
-                    Display Order (Optional)
-                  </label>
-                  <input
-                    type="number"
-                    name="display_order"
-                    value="0"
-                    onChange={(e) =>
-                      setImage({
-                        ...image,
-                        display_order: e.target.value,
-                      })
-                    }
-                  ></input>
-                </div>
-                <div className="input-pair">
-                  <label htmlFor="associated_entry_ID">
-                    Associated Portfolio Entry
-                  </label>
-                  <select
-                    name="associated_entry_ID"
-                    required={true}
-                    onChange={(e) =>
-                      handleAssociatedEntryChange(e.target.value)
-                    }
-                  >
-                    {portfolioEntries.map(
-                      (
-                        portfolioEntry //cycle through all portfolio entries titles
-                      ) => (
-                        <option
-                          key={portfolioEntry.portfolio_id}
-                          value={portfolioEntry.portfolio_id}
-                        >
-                          {portfolioEntry.title}
-                        </option>
-                      )
-                    )}
-                  </select>
-                </div>
+            <div className="portfolio-entry-images-edit">
+              <div className="input-pair">
+                <label htmlFor="upload">Upload Image</label>
+                <input
+                  type="file"
+                  name="upload"
+                  required={true}
+                  onChange={(e) => setImageUpload(e.target.files[0])}
+                />
               </div>
+              <div className="input-pair">
+                <label htmlFor="alt_text">Alt Text</label>
+                <input
+                  type="text"
+                  name="alt_text"
+                  placeholder="Alt Text"
+                  required={true}
+                  onChange={(e) =>
+                    setImage({
+                      ...image,
+                      alt_text: e.target.value,
+                    })
+                  }
+                />
+              </div>
+              <div className="input-pair">
+                <label htmlFor="image_type">Type</label>
+                <select
+                  name="image_type"
+                  onChange={(e) =>
+                    setImage({
+                      ...image,
+                      image_type: e.target.value,
+                    })
+                  }
+                >
+                  <option value="small">Small</option>
+                  <option value="large">Large</option>
+                  <option value="large">Thumbnail</option>
+                </select>
+              </div>
+              <div className="input-pair">
+                <label htmlFor="display_order">Display Order (Optional)</label>
+                <input
+                  type="number"
+                  name="display_order"
+                  value="0"
+                  onChange={(e) =>
+                    setImage({
+                      ...image,
+                      display_order: e.target.value,
+                    })
+                  }
+                ></input>
+              </div>
+              <div className="input-pair">
+                <label htmlFor="associated_entry_ID">
+                  Associated Portfolio Entry
+                </label>
+                <select
+                  name="associated_entry_ID"
+                  required={true}
+                  onChange={(e) => handleAssociatedEntryChange(e.target.value)}
+                >
+                  {portfolioEntries.map(
+                    (
+                      portfolioEntry //cycle through all portfolio entries titles
+                    ) => (
+                      <option
+                        key={portfolioEntry.portfolio_id}
+                        value={portfolioEntry.portfolio_id}
+                      >
+                        {portfolioEntry.title}
+                      </option>
+                    )
+                  )}
+                </select>
+              </div>
+            </div>
           </div>
           <div className="link-container">
             <button
@@ -162,8 +157,11 @@ export default function Portfolio() {
             >
               Submit Changes
             </button>
-            <a href="/Images" className="btn btn-primary clickable large hoverShadow">
-                Cancel
+            <a
+              href="/Images"
+              className="btn btn-primary clickable large hoverShadow"
+            >
+              Cancel
             </a>
           </div>
         </form>

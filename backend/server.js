@@ -3,12 +3,33 @@ const app = express();
 const cors = require("cors");
 const db = require("./db.js");
 const multer = require("multer");
-const upload = multer();
+const path = require("path");
 
 const IS_LOGGED_IN_BACKEND = true;
 
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
+const storage = multer.diskStorage({
+  destination(rec, file, cb) {
+    cb(null, "./frontend/public/images/");
+  },
+  filename(rec, file, cb) {
+    cb(null, Date.now() + " - " + file.originalname);
+  },
+});
+const fileFilter = (rec, file, cb) => {
+  // Accept image files only
+  if (file.mimetype.startsWith("image/")) {
+    cb(null, true);
+  } else {
+    cb(new Error("Not an image file"), false);
+  }
+};
+
+const upload = multer({
+  storage: storage,
+  fileFilter: fileFilter,
+});
 
 app.get("/portfolioEntries", (rec, res) => {
   db.getAllPortfolioEntries((error, portfolioEntries) => {
@@ -182,10 +203,39 @@ app.post("/Image/:ID/Edit", upload.none(), (rec, res) => {
   console.log(changes);
   db.updateImage(changes, (error) => {
     if (error) {
-      console.log(error);
       res.status(500).json({ error: "Failed to update image." });
     } else {
       res.status(200).json({ success: true, ID });
+    }
+  });
+});
+
+app.post("/Image/Create", upload.single("upload"), (rec, res) => {
+  console.log("creating image");
+  if (!IS_LOGGED_IN_BACKEND) {
+    console.log("Not logged in.");
+    return res.status(401).json({ error: "Not logged in." });
+    //TODO: give better feedback to user. error doesn't display on frontend
+  }
+
+  if (!rec.file) {
+    return res.status(400).json({ error: "No file uploaded" });
+  }
+  const imageFilePath = rec.file.path;
+
+  const newImage = {
+    image_path: path.basename(imageFilePath),
+    alt_text: rec.body.alt_text,
+    image_type: rec.body.image_type,
+    display_order: rec.body.display_order,
+    associated_entry_ID: rec.body.associated_entry_ID,
+  };
+  db.createImage(newImage, (error) => {
+    if (error) {
+      console.log(error);
+      res.status(500).json({ error: "Failed to add image." });
+    } else {
+      res.status(200).json({ success: true });
     }
   });
 });
