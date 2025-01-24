@@ -5,7 +5,7 @@ const db = require("./db.js");
 const multer = require("multer");
 const upload = multer();
 
-const IS_LOGGED_IN_BACKEND = false;
+const IS_LOGGED_IN_BACKEND = true;
 
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
@@ -165,6 +165,7 @@ app.post("/Entry", upload.none(), (rec, res) => {
 });
 
 app.post("/Image/:ID/Edit", upload.none(), (rec, res) => {
+  console.log("editing image");
   if (!IS_LOGGED_IN_BACKEND) {
     console.log("Not logged in.");
     return res.status(401).json({ error: "Not logged in." });
@@ -174,11 +175,14 @@ app.post("/Image/:ID/Edit", upload.none(), (rec, res) => {
   const changes = {
     ID,
     alt_text: rec.body.alt_text,
-    type: rec.body.type,
+    image_type: rec.body.image_type,
     display_order: rec.body.display_order,
+    associated_entry_ID: rec.body.associated_entry_ID,
   };
+  console.log(changes);
   db.updateImage(changes, (error) => {
     if (error) {
+      console.log(error);
       res.status(500).json({ error: "Failed to update image." });
     } else {
       res.status(200).json({ success: true, ID });

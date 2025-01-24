@@ -17,7 +17,6 @@ export default function Portfolio() {
         }
         const data = await res.json();
         setImage(data);
-        console.log(image);
       } catch (err) {
         setError(err.message);
         console.error(err);
@@ -29,7 +28,6 @@ export default function Portfolio() {
         .then((res) => res.json())
         .then((data) => {
           setPortfolioEntries(data);
-          console.log(portfolioEntries);
         });
     }
 
@@ -53,6 +51,7 @@ export default function Portfolio() {
     // Function to handle form submission (with help from chatGPT)
     event.preventDefault(); // Prevent the default form submission behavior
     try {
+      console.log("time to start");
       const formData = new FormData(event.target); // Collect form data
       console.log(formData);
       const response = await fetch(
@@ -66,7 +65,7 @@ export default function Portfolio() {
         throw new Error("Failed to update portfolio image entry.");
       }
       // If the submission is successful, navigate back to the image table
-      navigate(`/ImageTable`);
+      navigate(`/Images`);
     } catch (error) {
       console.error(error);
       setError("Failed to update the image entry.");
@@ -120,14 +119,14 @@ export default function Portfolio() {
                   />
                 </div>
                 <div className="input-pair">
-                  <label htmlFor="type">Type</label>
+                  <label htmlFor="image_type">Type</label>
                   <select
-                    name="type"
-                    value={image.type}
+                    name="image_type"
+                    value={image.image_type}
                     onChange={(e) =>
                       setImage({
-                        ...image,
-                        type: e.target.value,
+                        ...image_type,
+                        image_type: e.target.value,
                       })
                     }
                   >
@@ -188,8 +187,11 @@ export default function Portfolio() {
             >
               Submit Changes
             </button>
-            <a href="/Images" className="btn btn-primary clickable large hoverShadow">
-                Cancel
+            <a
+              href="/Images"
+              className="btn btn-primary clickable large hoverShadow"
+            >
+              Cancel
             </a>
           </div>
         </form>

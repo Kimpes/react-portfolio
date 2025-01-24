@@ -116,8 +116,8 @@ exports.getThumbnailByEntryID = function (id, callback) {
 exports.createImage = function (newImage, callback) {
   let query;
   let values;
-  if (!newImage.order) {
-    //the order is optional
+  if (!newImage.display_order) {
+    //the display order is optional
     query =
       "INSERT INTO images (associated_entry_ID, image_path, alt_text, image_type) VALUES (?, ?, ?, ?)";
     values = [
@@ -128,13 +128,13 @@ exports.createImage = function (newImage, callback) {
     ];
   } else {
     query =
-      "INSERT INTO images (associated_entry_ID, image_path, alt_text, image_type, order) VALUES (?, ?, ?, ?, ?)";
+      "INSERT INTO images (associated_entry_ID, image_path, alt_text, image_type, display_order) VALUES (?, ?, ?, ?, ?)";
     values = [
       newImage.associated_entry_ID,
       newImage.image_path,
       newImage.alt_text,
       newImage.image_type,
-      newImage.order,
+      newImage.display_order,
     ];
   }
 
@@ -144,16 +144,29 @@ exports.createImage = function (newImage, callback) {
 };
 
 exports.updateImage = function (image, callback) {
-  //TODO: should i verify if order is declared? it will become null if not
-  const query =
-    "UPDATE images SET associated_entry_ID = ?, alt_text = ?, image_type = ?, order = ? WHERE ID = ?";
-  const values = [
-    image.associated_entry_ID, //TODO: standardise capitalisation.
-    image.alt_text,
-    image.image_type,
-    image.order,
-    image.ID,
-  ];
+  let query;
+  let values;
+  //the order is optional
+  if (!image.display_order) {
+    query =
+      "UPDATE images SET associated_entry_ID = ?, alt_text = ?, image_type = ? WHERE ID = ?";
+    values = [
+      image.associated_entry_ID,
+      image.alt_text,
+      image.image_type,
+      image.ID,
+    ];
+  } else {
+    query =
+      "UPDATE images SET associated_entry_ID = ?, alt_text = ?, image_type = ?, display_order = ? WHERE ID = ?";
+    values = [
+      image.associated_entry_ID,
+      image.alt_text,
+      image.image_type,
+      image.display_order,
+      image.ID,
+    ];
+  }
   db.run(query, values, function (error) {
     callback(error);
   });
