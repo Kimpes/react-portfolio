@@ -4,10 +4,12 @@ const cors = require("cors");
 const db = require("./db.js");
 const multer = require("multer");
 const path = require("path");
+const fs = require("fs");
 
 const IS_LOGGED_IN_BACKEND = true;
 
 app.use(cors());
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 const storage = multer.diskStorage({
   destination(rec, file, cb) {
@@ -162,6 +164,7 @@ app.post("/Entry/:ID/Delete", (rec, res) => {
 });
 
 app.post("/Entry", upload.none(), (rec, res) => {
+  //rename the path to /Entry/Create for consistency
   if (!IS_LOGGED_IN_BACKEND) {
     console.log("Not logged in.");
     return res.status(401).json({ error: "Not logged in." });
@@ -236,6 +239,41 @@ app.post("/Image/Create", upload.single("upload"), (rec, res) => {
       res.status(500).json({ error: "Failed to add image." });
     } else {
       res.status(200).json({ success: true });
+    }
+  });
+});
+
+app.post("/Image/:ID/Delete", (rec, res) => {
+  if (!IS_LOGGED_IN_BACKEND) {
+    console.log("Not logged in.");
+    return res.status(401).json({ error: "Not logged in." });
+    //TODO: give better feedback to user. error doesn't display on frontend
+  }
+  console.log("deleting image");
+  console.log("__dirname: ", __dirname);
+  console.log("Full request body:", rec.body);
+  console.log("rec.body.image_path: ", rec.body.image_path);
+  fs.unlink(
+    path.join(
+      __dirname,
+      "..",
+      "frontend",
+      "public",
+      "images",
+      rec.body.image_path
+    ),
+    (err) => {
+      if (err) {
+        console.log(err);
+      }
+    }
+  );
+  const ID = rec.params.ID;
+  db.deleteImage(ID, (error) => {
+    if (error) {
+      res.status(500).json({ error: "Failed to delete portfolio entry." });
+    } else {
+      res.status(200).json({ success: true, ID });
     }
   });
 });

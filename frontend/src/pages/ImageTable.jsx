@@ -24,7 +24,7 @@ export default function Home() {
           <div className="image-grid">
             {(!!images && images).map((image) => (
               <div key={image.ID} className="image-cell sub-shadow">
-                <a href={`/Images/Edit/${image.ID}`}>
+                <a href={`/Images/${image.ID}/Edit`}>
                   <img
                     src={`/images/${image.image_path}`}
                     alt={image.alt_text}

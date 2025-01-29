@@ -195,6 +195,11 @@ export default function Portfolio() {
             </a>
           </div>
         </form>
+        <a href={`/Images/${image.ID}/Delete`}>
+          <button className="btn btn-primary clickable large hoverShadow deletion">
+            Delete
+          </button>
+        </a>
       </main>
     </>
   );
