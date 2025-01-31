@@ -1,3 +1,4 @@
+//TODO: two deletion pages is excessive. Try to combine their functionality by making more generic functions.
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 

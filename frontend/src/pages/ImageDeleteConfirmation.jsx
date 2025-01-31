@@ -1,3 +1,4 @@
+//TODO: two deletion pages is excessive. Try to combine their functionality by making more generic functions.
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 
@@ -27,7 +28,6 @@ export default function Portfolio() {
     event.preventDefault();
     try {
       const imageData = { image_path: image.image_path };
-      console.log("imageData: ", imageData);
       const response = await fetch(
         `http://localhost:5000/Image/${image.ID}/Delete`,
         {

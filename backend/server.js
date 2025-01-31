@@ -249,10 +249,6 @@ app.post("/Image/:ID/Delete", (rec, res) => {
     return res.status(401).json({ error: "Not logged in." });
     //TODO: give better feedback to user. error doesn't display on frontend
   }
-  console.log("deleting image");
-  console.log("__dirname: ", __dirname);
-  console.log("Full request body:", rec.body);
-  console.log("rec.body.image_path: ", rec.body.image_path);
   fs.unlink(
     path.join(
       __dirname,
