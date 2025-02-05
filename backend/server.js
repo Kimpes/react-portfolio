@@ -12,14 +12,14 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 const storage = multer.diskStorage({
-  destination(rec, file, cb) {
+  destination(req, file, cb) {
     cb(null, "./frontend/public/images/");
   },
-  filename(rec, file, cb) {
+  filename(req, file, cb) {
     cb(null, Date.now() + " - " + file.originalname);
   },
 });
-const fileFilter = (rec, file, cb) => {
+const fileFilter = (req, file, cb) => {
   // Accept image files only
   if (file.mimetype.startsWith("image/")) {
     cb(null, true);
@@ -33,7 +33,7 @@ const upload = multer({
   fileFilter: fileFilter,
 });
 
-app.get("/portfolioEntries", (rec, res) => {
+app.get("/portfolioEntries", (req, res) => {
   db.getAllPortfolioEntries((error, portfolioEntries) => {
     if (error) {
       res.status(500).json({ error: "Failed to retrieve portfolio entries." });
@@ -45,9 +45,9 @@ app.get("/portfolioEntries", (rec, res) => {
   });
 });
 
-app.get("/Entry/:ID", (rec, res) => {
+app.get("/Entry/:ID", (req, res) => {
   console.log("lets get the entry");
-  const ID = rec.params.ID;
+  const ID = req.params.ID;
   db.getPortfolioEntryByID(ID, (error, portfolioEntryData) => {
     if (error) {
       res.status(500).json({ error });
@@ -80,7 +80,7 @@ app.get("/Entry/:ID", (rec, res) => {
   });
 });
 
-app.get("/images", (rec, res) => {
+app.get("/images", (req, res) => {
   db.getAllImages((error, images) => {
     if (error) {
       res.status(500).json({ error: "Failed to retrieve images." });
@@ -92,8 +92,8 @@ app.get("/images", (rec, res) => {
   });
 });
 
-app.get("/imagesByEntry/:ID", (rec, res) => {
-  const ID = rec.params.ID;
+app.get("/imagesByEntry/:ID", (req, res) => {
+  const ID = req.params.ID;
   db.getImagesByEntryID(ID, (error, images) => {
     if (error) {
       res.status(500).json({ error: "Failed to retrieve images." });
@@ -105,9 +105,9 @@ app.get("/imagesByEntry/:ID", (rec, res) => {
   });
 });
 
-app.get("/thumbnailByEntry/:ID", (rec, res) => {
+app.get("/thumbnailByEntry/:ID", (req, res) => {
   //TODO: change name of function, cause we are using it for both images and thumbnails
-  const ID = rec.params.ID;
+  const ID = req.params.ID;
   console.log("lets get the thumbnail");
   db.getThumbnailByEntryID(ID, (error, thumbnail) => {
     console.log(thumbnail);
@@ -121,22 +121,22 @@ app.get("/thumbnailByEntry/:ID", (rec, res) => {
   });
 });
 
-app.post("/Entry/:ID/Edit", upload.none(), (rec, res) => {
+app.post("/Entry/:ID/Edit", upload.none(), (req, res) => {
   if (!IS_LOGGED_IN_BACKEND) {
     console.log("Not logged in.");
     return res.status(401).json({ error: "Not logged in." });
     //TODO: give better feedback to user. error doesn't display on frontend
   }
-  const ID = rec.params.ID;
+  const ID = req.params.ID;
   const changes = {
     ID,
-    title: rec.body.title,
-    description: rec.body.description,
-    portfolio_type: rec.body.portfolio_type,
-    creation_date: rec.body.creation_date,
-    thumbnail_id: rec.body.thumbnail_id,
-    additional_description: rec.body.additional_description,
-    link: rec.body.link,
+    title: req.body.title,
+    description: req.body.description,
+    portfolio_type: req.body.portfolio_type,
+    creation_date: req.body.creation_date,
+    thumbnail_id: req.body.thumbnail_id,
+    additional_description: req.body.additional_description,
+    link: req.body.link,
   };
   db.updatePortfolioEntry(changes, (error) => {
     if (error) {
@@ -147,13 +147,13 @@ app.post("/Entry/:ID/Edit", upload.none(), (rec, res) => {
   });
 });
 
-app.post("/Entry/:ID/Delete", (rec, res) => {
+app.post("/Entry/:ID/Delete", (req, res) => {
   if (!IS_LOGGED_IN_BACKEND) {
     console.log("Not logged in.");
     return res.status(401).json({ error: "Not logged in." });
     //TODO: give better feedback to user. error doesn't display on frontend
   }
-  const ID = rec.params.ID;
+  const ID = req.params.ID;
   db.deletePortfolioEntry(ID, (error) => {
     if (error) {
       res.status(500).json({ error: "Failed to delete portfolio entry." });
@@ -163,7 +163,7 @@ app.post("/Entry/:ID/Delete", (rec, res) => {
   });
 });
 
-app.post("/Entry", upload.none(), (rec, res) => {
+app.post("/Entry", upload.none(), (req, res) => {
   //rename the path to /Entry/Create for consistency
   if (!IS_LOGGED_IN_BACKEND) {
     console.log("Not logged in.");
@@ -171,13 +171,13 @@ app.post("/Entry", upload.none(), (rec, res) => {
     //TODO: give better feedback to user. error doesn't display on frontend
   }
   const newEntry = {
-    title: rec.body.title,
-    description: rec.body.description,
-    portfolio_type: rec.body.portfolio_type,
-    creation_date: rec.body.creation_date,
-    thumbnail_id: rec.body.thumbnail_id,
-    additional_description: rec.body.additional_description,
-    link: rec.body.link,
+    title: req.body.title,
+    description: req.body.description,
+    portfolio_type: req.body.portfolio_type,
+    creation_date: req.body.creation_date,
+    thumbnail_id: req.body.thumbnail_id,
+    additional_description: req.body.additional_description,
+    link: req.body.link,
   };
   db.createPortfolioEntry(newEntry, (error) => {
     if (error) {
@@ -188,20 +188,20 @@ app.post("/Entry", upload.none(), (rec, res) => {
   });
 });
 
-app.post("/Image/:ID/Edit", upload.none(), (rec, res) => {
+app.post("/Image/:ID/Edit", upload.none(), (req, res) => {
   console.log("editing image");
   if (!IS_LOGGED_IN_BACKEND) {
     console.log("Not logged in.");
     return res.status(401).json({ error: "Not logged in." });
     //TODO: give better feedback to user. error doesn't display on frontend
   }
-  const ID = rec.params.ID;
+  const ID = req.params.ID;
   const changes = {
     ID,
-    alt_text: rec.body.alt_text,
-    image_type: rec.body.image_type,
-    display_order: rec.body.display_order,
-    associated_entry_ID: rec.body.associated_entry_ID,
+    alt_text: req.body.alt_text,
+    image_type: req.body.image_type,
+    display_order: req.body.display_order,
+    associated_entry_ID: req.body.associated_entry_ID,
   };
   console.log(changes);
   db.updateImage(changes, (error) => {
@@ -213,7 +213,7 @@ app.post("/Image/:ID/Edit", upload.none(), (rec, res) => {
   });
 });
 
-app.post("/Image/Create", upload.single("upload"), (rec, res) => {
+app.post("/Image/Create", upload.single("upload"), (req, res) => {
   console.log("creating image");
   if (!IS_LOGGED_IN_BACKEND) {
     console.log("Not logged in.");
@@ -221,17 +221,17 @@ app.post("/Image/Create", upload.single("upload"), (rec, res) => {
     //TODO: give better feedback to user. error doesn't display on frontend
   }
 
-  if (!rec.file) {
+  if (!req.file) {
     return res.status(400).json({ error: "No file uploaded" });
   }
-  const imageFilePath = rec.file.path;
+  const imageFilePath = req.file.path;
 
   const newImage = {
     image_path: path.basename(imageFilePath),
-    alt_text: rec.body.alt_text,
-    image_type: rec.body.image_type,
-    display_order: rec.body.display_order,
-    associated_entry_ID: rec.body.associated_entry_ID,
+    alt_text: req.body.alt_text,
+    image_type: req.body.image_type,
+    display_order: req.body.display_order,
+    associated_entry_ID: req.body.associated_entry_ID,
   };
   db.createImage(newImage, (error) => {
     if (error) {
@@ -243,7 +243,7 @@ app.post("/Image/Create", upload.single("upload"), (rec, res) => {
   });
 });
 
-app.post("/Image/:ID/Delete", (rec, res) => {
+app.post("/Image/:ID/Delete", (req, res) => {
   if (!IS_LOGGED_IN_BACKEND) {
     console.log("Not logged in.");
     return res.status(401).json({ error: "Not logged in." });
@@ -256,7 +256,7 @@ app.post("/Image/:ID/Delete", (rec, res) => {
       "frontend",
       "public",
       "images",
-      rec.body.image_path
+      req.body.image_path
     ),
     (err) => {
       if (err) {
@@ -264,7 +264,7 @@ app.post("/Image/:ID/Delete", (rec, res) => {
       }
     }
   );
-  const ID = rec.params.ID;
+  const ID = req.params.ID;
   db.deleteImage(ID, (error) => {
     if (error) {
       res.status(500).json({ error: "Failed to delete portfolio entry." });
