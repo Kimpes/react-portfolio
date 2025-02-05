@@ -214,15 +214,30 @@ app.post("/Image/:ID/Edit", upload.none(), (req, res) => {
 });
 
 app.post("/Image/Create", upload.single("upload"), (req, res) => {
-  console.log("creating image");
   if (!IS_LOGGED_IN_BACKEND) {
     console.log("Not logged in.");
+    if (req.file) {
+      fs.unlink(req.file.path, function (error) {
+        if (error) {
+          errorMessages.push("Internal file system error");
+        }
+      });
+    }
     return res.status(401).json({ error: "Not logged in." });
     //TODO: give better feedback to user. error doesn't display on frontend
   }
-
   if (!req.file) {
     return res.status(400).json({ error: "No file uploaded" });
+  }
+  if (req.file.size > 1000000) {
+    if (req.file) {
+      fs.unlink(req.file.path, function (error) {
+        if (error) {
+          errorMessages.push("Internal file system error");
+        }
+      });
+    }
+    return res.status(400).json({ error: "File too large" });
   }
   const imageFilePath = req.file.path;
 
@@ -233,6 +248,7 @@ app.post("/Image/Create", upload.single("upload"), (req, res) => {
     display_order: req.body.display_order,
     associated_entry_ID: req.body.associated_entry_ID,
   };
+
   db.createImage(newImage, (error) => {
     if (error) {
       console.log(error);

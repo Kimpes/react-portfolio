@@ -53,7 +53,7 @@ export default function Portfolio() {
       navigate(`/Images`);
     } catch (error) {
       console.error(error);
-      setError("Failed to update the image entry.");
+      setError("Failed to update the image entry."); //TODO: make this more specific
     }
   };
 
