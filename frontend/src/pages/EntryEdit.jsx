@@ -226,49 +226,6 @@ export default function Portfolio() {
                   })()}
                 </div>
               </div>
-              {!!portfolioEntry.images && (
-                <div className="portfolio-entry-images-edit">
-                  <h2>Images</h2>
-                  {portfolioEntry.images.map((image) => (
-                    <div
-                      className="portfolio-entry-image-container"
-                      key={image.ID}
-                    >
-                      <div className="input-pair">
-                        <label htmlFor="image_path">Image Path</label>
-                        <input
-                          type="text"
-                          name="image_path"
-                          value={image.image_path}
-                          placeholder="Image Path"
-                        />
-                      </div>
-                      <div className="input-pair">
-                        <label htmlFor="alt_text">Alt Text</label>
-                        <input
-                          type="text"
-                          name="alt_text"
-                          value={image.alt_text}
-                          placeholder="Alt Text"
-                        />
-                      </div>
-                      <div className="input-pair">
-                        <label htmlFor="type">Type</label>
-                        <select
-                          name="type"
-                          value={image.type}
-                          onChange={(e) =>
-                            handleImageTypeChange(image.ID, e.target.value)
-                          }
-                        >
-                          <option value="small">Small</option>
-                          <option value="large">Large</option>
-                        </select>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
             </div>
             <div className="link-container">
               <button
